@@ -1,7 +1,7 @@
 {
-  "name": "건축법 상주감리 대가 산출기",
+  "name": "상주감리 산출기",
   "short_name": "상주감리",
-  "description": "건축법 제25조 · 시행령 제19조 기준 상주감리 실비정액가산방식 대가 산출기 — ARCHITECT KIM MANMIN",
+  "description": "건축법 제25조 · 시행령 제19조 기준 상주감리 실비정액가산방식 대가 산출기 — ARCHITECT KIM MANMIN Ver-1.0",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

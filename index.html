@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>건축법 상주감리 대가 산출기 · MANMIN-Ver1.0</title>
+<title>상주감리 산출기 [MANMIN-Ver1.0]</title>
 <meta name="description" content="건축법 제25조 · 건축법 시행령 제19조 기준 상주감리 실비정액가산방식 산출기"/>
 
 <!-- ═══ PWA 설정 ═══ -->
@@ -27,7 +27,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 .brand-icon{width:40px;height:40px;background:#2563eb;border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(37,99,235,.35);flex-shrink:0;}
 .brand-icon svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .brand-texts{min-width:0;}
-.brand-title{font-size:16px;font-weight:900;color:#1e3a8a;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.brand-title{font-size:16px;font-weight:900;color:#1e3a8a;letter-spacing:-.02em;line-height:1.25;}
 .brand-sub{font-size:10px;color:#3b82f6;margin-top:2px;white-space:nowrap;}
 .btn-print{background:#e63312;color:#fff;border:none;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:7px;font-family:inherit;transition:background .18s,transform .1s;box-shadow:0 2px 10px rgba(230,51,18,.38);white-space:nowrap;flex-shrink:0;}
 .btn-print:hover{background:#c62a0c;}
@@ -340,9 +340,9 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 /* ── 모바일 (≤640px) ── */
 @media(max-width:640px){
   /* 헤더 */
-  .header-inner{height:54px;padding:0 12px;}
+  .header-inner{height:auto;min-height:54px;padding:8px 12px;}
   .brand-icon{width:34px;height:34px;}
-  .brand-title{font-size:13px;}
+  .brand-title{font-size:12px;}
   .brand-sub{display:none;}
   .btn-print{padding:8px 10px;font-size:0;gap:0;}
   .btn-print svg{width:18px;height:18px;}
@@ -419,7 +419,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       </div>
       <div class="brand-texts">
-        <div class="brand-title">MANMIN-Ver1.0 &nbsp;상주감리 산출기</div>
+        <div class="brand-title">상주감리 산출기 [MANMIN-Ver1.0]</div>
         <div class="brand-sub">건축법 제25조 · 건축법 시행령 제19조 · 2026년 기준</div>
       </div>
     </div>
@@ -671,7 +671,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
         </div>
         <div class="a4-sign-supervisor"><span class="hint">공사감리자</span><span class="name" id="r-sign-name">○○건축사사무소</span><span class="hint">(인)</span></div>
       </div>
-      <div class="a4-footer"><div class="a4-bot-bar"></div><div class="a4-footer-ver">MANMIN-Ver1.0 · 건축법 상주감리 산출기 · 2026년 기준</div></div>
+      <div class="a4-footer"><div class="a4-bot-bar"></div><div class="a4-footer-ver">상주감리 산출기 [MANMIN-Ver1.0] · 건축법 제25조 · 2026년 기준</div></div>
     </div>
   </div>
 </div><!-- /tab-result -->
