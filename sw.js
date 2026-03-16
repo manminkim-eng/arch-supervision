@@ -55,7 +55,7 @@ self.addEventListener('activate', (event) => {
     caches.keys()
       .then((keys) => Promise.all(
         keys.filter((k) => ![CACHE_NAME, CDN_CACHE].includes(k))
-            .map((k) => { console.log('[SW] 삭제:', k); return caches.delete(k); })
+            .map((k) => { console.log('[SW] 구버전 삭제:', k); return caches.delete(k); })
       ))
       .then(() => self.clients.claim())
   );
@@ -77,6 +77,7 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(isCDN ? networkFirstCDN(request) : cacheFirstLocal(request));
 });
 
+/* ── Cache-First (로컬 자산) ─────────────────────────────────── */
 async function cacheFirstLocal(request) {
   const cached = await caches.match(request);
   if (cached) return cached;
@@ -96,6 +97,7 @@ async function cacheFirstLocal(request) {
   }
 }
 
+/* ── Network-First (CDN 자산) ────────────────────────────────── */
 async function networkFirstCDN(request) {
   try {
     const res = await fetch(request);
