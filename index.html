@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>상주감리 산출기 [MANMIN-Ver1.0]</title>
+<title>상주감리 산출기 [MANMIN-Ver3.0]</title>
 <meta name="description" content="건축법 제25조 · 건축법 시행령 제19조 기준 상주감리 실비정액가산방식 산출기"/>
 
 <!-- ═══ PWA 설정 ═══ -->
@@ -446,7 +446,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       </div>
       <div class="brand-texts">
-        <div class="brand-title">상주감리 산출기 [MANMIN-Ver1.0]</div>
+        <div class="brand-title">상주감리 산출기 [MANMIN-Ver3.0]</div>
         <div class="brand-sub">건축법 제25조 · 건축법 시행령 제19조 · 2026년 기준</div>
       </div>
     </div>
@@ -704,7 +704,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
         </div>
         <div class="a4-sign-supervisor"><span class="hint">공사감리자</span><span class="name" id="r-sign-name">○○건축사사무소</span><span class="hint">(인)</span></div>
       </div>
-      <div class="a4-footer"><div class="a4-bot-bar"></div><div class="a4-footer-ver">상주감리 산출기 [MANMIN-Ver1.0] · 건축법 제25조 · 2026년 기준</div></div>
+      <div class="a4-footer"><div class="a4-bot-bar"></div><div class="a4-footer-ver">상주감리 산출기 [MANMIN-Ver3.0] · 건축법 제25조 · 2026년 기준</div></div>
     </div>
     </div><!-- /a4-scale-wrap -->
   </div>
@@ -959,7 +959,7 @@ function recalc(){
   const oR=+document.getElementById('overheadRate').value,tR=+document.getElementById('techFeeRate').value;
   const de=rawNum('directExpenses'),ins=rawNum('insuranceFee'),neg=rawNum('negoAmount');
   const vat=document.getElementById('includeVat').checked;
-  const labor=al+ml+cl+nrl,over=labor*(oR/100),tech=(labor+over)*(tR/100);
+  const labor=al+ml+cl+nrl,over=Math.floor(labor*(oR/100)),tech=Math.floor((labor+over)*(tR/100));
   const sub=labor+over+tech+de+ins-neg,vatAmt=vat?Math.floor(sub*.1):0,total=Math.floor((sub+vatAmt)/1000)*1000;
   const maxM=Math.max(am,mm_,cm);
   document.getElementById('banner-desc').textContent=`상주기간 ${maxM}개월 · 상주 3인 + 비상주${nrg==='none'?' 미투입':' 1인'} · ${vat?'VAT 포함':'VAT 제외'}`;
