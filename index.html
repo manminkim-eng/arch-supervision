@@ -804,7 +804,8 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
         <button class="fml-close-btn" onclick="closeFormula()" aria-label="닫기">✕</button>
       </div>
       <div class="fml-itabs">
-        <button class="fml-itab on"  onclick="switchFmlTab(0,this)">① 직접인건비</button>
+        <button class="fml-itab on"  onclick="switchFmlTab('howto',this)">🗺️ 이용방법</button>
+        <button class="fml-itab"     onclick="switchFmlTab(0,this)">① 직접인건비</button>
         <button class="fml-itab"     onclick="switchFmlTab(1,this)">② 제경비·기술료</button>
         <button class="fml-itab"     onclick="switchFmlTab(2,this)">③ 합계·VAT·총액</button>
         <button class="fml-itab"     onclick="switchFmlTab(3,this)">📋 노임단가 참고</button>
@@ -813,8 +814,120 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 
     <div class="fml-bd">
 
+      <!-- 패널 howto: 이용방법 -->
+      <div class="fml-panel on" id="fml-phowto">
+
+        <!-- 상단 타이틀 배너 -->
+        <div style="background:linear-gradient(135deg,#081e44,#0c4da2);border-radius:13px;padding:16px 18px;margin-bottom:16px;">
+          <div style="font-size:13px;font-weight:900;color:#fbbf24;margin-bottom:4px;display:flex;align-items:center;gap:8px;">
+            <span style="font-size:20px;">🏛️</span> 상주감리 산출기 이용방법
+          </div>
+          <div style="font-size:10.5px;color:rgba(255,255,255,.7);line-height:1.65;">건축법 제25조 · 건축법 시행령 제19조 기준 · 실비정액가산방식 · 2026년 노임단가 기준</div>
+        </div>
+
+        <!-- STEP 1 -->
+        <div style="display:flex;gap:11px;align-items:flex-start;background:#f8fafc;border:1.5px solid #e4e9f0;border-left:4px solid #0c4da2;border-radius:10px;padding:13px 14px;margin-bottom:9px;">
+          <div style="min-width:30px;height:30px;background:linear-gradient(135deg,#0c4da2,#0a3270);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(12,77,162,.35);">1</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12px;font-weight:900;color:#0c4da2;margin-bottom:5px;">📋 감리원 정보 입력 탭</div>
+            <div style="font-size:10.5px;color:#374151;line-height:1.85;">
+              ① 상단 <strong>「📋 감리원 정보」 탭</strong>을 선택합니다.<br>
+              ② <strong>건축·기계·토목 상주감리원</strong> 각각의 <strong>기술등급</strong>(기술사/특급/고급/중급/초급)과 <strong>감리기간(개월)</strong>을 입력합니다.<br>
+              ③ 기간은 <strong>0.5개월 단위</strong>로 입력 가능합니다 — 예: 6.5개월 → 143인일 자동 환산.<br>
+              ④ <strong>비상주 감리원</strong>은 투입 여부를 선택하고, 투입 시 등급과 개월수를 입력합니다.
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div style="display:flex;gap:11px;align-items:flex-start;background:#fff7ed;border:1.5px solid #fed7aa;border-left:4px solid #f97316;border-radius:10px;padding:13px 14px;margin-bottom:9px;">
+          <div style="min-width:30px;height:30px;background:linear-gradient(135deg,#f97316,#ea580c);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(249,115,22,.35);">2</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12px;font-weight:900;color:#c2410c;margin-bottom:5px;">⚙️ 대가기준 요율 설정</div>
+            <div style="font-size:10.5px;color:#374151;line-height:1.85;">
+              ① <strong>제경비율 슬라이더</strong>를 조정합니다 — 법정 범위 110% ~ 120% (직접인건비 기준).<br>
+              ② <strong>기술료율 슬라이더</strong>를 조정합니다 — 법정 범위 20% ~ 40% (인건비+제경비 기준).<br>
+              ③ <strong>직접경비</strong>(숙박·교통·인쇄비 등)와 <strong>손해배상보험료</strong>를 실비 기준으로 입력합니다.<br>
+              ④ 필요 시 <strong>협의 조정액(NEGO)</strong>을 입력하면 공급가액에서 자동 차감됩니다.
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div style="display:flex;gap:11px;align-items:flex-start;background:#f0fdf4;border:1.5px solid #bbf7d0;border-left:4px solid #16a34a;border-radius:10px;padding:13px 14px;margin-bottom:9px;">
+          <div style="min-width:30px;height:30px;background:linear-gradient(135deg,#16a34a,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(22,163,74,.35);">3</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12px;font-weight:900;color:#15803d;margin-bottom:5px;">🧮 부가세 포함 여부 선택</div>
+            <div style="font-size:10.5px;color:#374151;line-height:1.85;">
+              ① <strong>부가가치세 포함/제외</strong> 체크박스를 선택합니다.<br>
+              ② VAT 포함 시: <strong>부가가치세 = 공급가액 × 10%</strong> (손해배상보험료 포함 후 계산).<br>
+              ③ 상단 <strong>총액 배너</strong>에서 공급가액과 최종 총액(천원 단위 절사)을 실시간으로 확인할 수 있습니다.
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div style="display:flex;gap:11px;align-items:flex-start;background:#f5f3ff;border:1.5px solid #ddd6fe;border-left:4px solid #7c3aed;border-radius:10px;padding:13px 14px;margin-bottom:9px;">
+          <div style="min-width:30px;height:30px;background:linear-gradient(135deg,#7c3aed,#6d28d9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(124,58,237,.35);">4</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12px;font-weight:900;color:#6d28d9;margin-bottom:5px;">📊 산출 결과 확인 탭</div>
+            <div style="font-size:10.5px;color:#374151;line-height:1.85;">
+              ① 상단 <strong>「📊 산출 결과」 탭</strong>으로 이동하면 인력별 인건비 상세와 최종 대가 내역서를 확인합니다.<br>
+              ② 감리원별 노임단가·인일수·소계가 항목별로 표시됩니다.<br>
+              ③ <strong>협의율</strong> 및 요율 범위 적정성이 자동으로 검토됩니다.
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 5 -->
+        <div style="display:flex;gap:11px;align-items:flex-start;background:#eff6ff;border:1.5px solid #bfdbfe;border-left:4px solid #2563eb;border-radius:10px;padding:13px 14px;margin-bottom:16px;">
+          <div style="min-width:30px;height:30px;background:linear-gradient(135deg,#2563eb,#1d4ed8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(37,99,235,.35);">5</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12px;font-weight:900;color:#1d4ed8;margin-bottom:5px;">🖨️ 출력 및 저장</div>
+            <div style="font-size:10.5px;color:#374151;line-height:1.85;">
+              ① 상단 헤더의 <strong>🖨️ 인쇄/PDF 저장 버튼</strong>을 클릭하면 A4 보고서 형식으로 출력됩니다.<br>
+              ② <strong>「📋 참고자료」 탭</strong>에서 건축법·건축사법·대가기준 등 적용 법령 전문을 확인할 수 있습니다.<br>
+              ③ PWA 앱 설치: 브라우저 주소창 설치 아이콘 또는 iOS Safari 공유버튼 → 홈 화면에 추가.
+            </div>
+          </div>
+        </div>
+
+        <!-- 주요 기능 요약 -->
+        <div class="fml-sec-ttl" style="color:#0c4da2;">💡 주요 기능 요약</div>
+        <div class="fml-g2">
+          <div class="fml-card" style="border-left:3px solid #0c4da2;">
+            <div class="fml-card-ttl" style="color:#0c4da2;">📐 계산식 안내 버튼</div>
+            <div class="fml-note">오른쪽 하단 플로팅 버튼(FAB)을 클릭하면 이 창이 열립니다. 탭을 전환하여 직접인건비·제경비·기술료·VAT 계산식과 2026년 노임단가를 확인하세요.</div>
+          </div>
+          <div class="fml-card" style="border-left:3px solid #f97316;">
+            <div class="fml-card-ttl" style="color:#f97316;">⚡ 실시간 자동 계산</div>
+            <div class="fml-note">등급·기간·요율 변경 즉시 상단 배너의 총액이 실시간 갱신됩니다. 별도 계산 버튼 없이 입력값만 변경하면 됩니다.</div>
+          </div>
+          <div class="fml-card" style="border-left:3px solid #16a34a;">
+            <div class="fml-card-ttl" style="color:#16a34a;">📅 보고서 날짜 설정</div>
+            <div class="fml-note">입력 탭 상단의 <strong>보고서 기준일</strong> 필드에서 날짜를 변경하면 출력 보고서 날짜가 자동 반영됩니다.</div>
+          </div>
+          <div class="fml-card" style="border-left:3px solid #e63312;">
+            <div class="fml-card-ttl" style="color:#e63312;">⚠️ 민간 건축물 적용</div>
+            <div class="fml-note">건축사법 제19조의3(26.02.12 국회 통과) 시행 후 민간 건축물도 대가기준 준용이 의무화됩니다. 발효 여부를 확인 후 적용하세요.</div>
+          </div>
+        </div>
+
+        <!-- 법적 근거 -->
+        <div class="fml-hi" style="margin-top:4px;">
+          <div class="fml-card-ttl" style="color:#0c4da2;">📌 주요 법적 근거</div>
+          <div class="fml-note" style="font-size:10.5px;line-height:2.0;">
+            <strong>건축법 제25조</strong> — 건축물의 공사감리 · 26.02.27 최신 시행<br>
+            <strong>건축법 시행령 제19조 제5항</strong> — 상주감리 연속 배치 기준 · 26.01.02 시행<br>
+            <strong>국토부 고시 제2020-635호</strong> — 건축사 업무범위와 대가기준<br>
+            <strong>2026년 노임단가</strong> — 한국엔지니어링협회 2025.12.29 공표 · 2026.01.01 적용
+          </div>
+        </div>
+
+      </div>
+
       <!-- 패널 0: 직접인건비 -->
-      <div class="fml-panel on" id="fml-p0">
+      <div class="fml-panel" id="fml-p0">
         <div class="fml-sec-ttl" style="color:#0c4da2;">직접인건비 핵심 공식</div>
         <div class="fml-hi">
           <div class="fml-card-ttl" style="color:#0c4da2;">기본 공식 (실비정액가산방식)</div>
@@ -1064,10 +1177,29 @@ function renderResult(){
 function doPrint(){renderResult();document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab==='result'));document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='tab-result'));setTimeout(function(){window.focus();window.print();},400);}
 
 /* 모달 제어 */
-function openFormula(){document.getElementById('fml-overlay').classList.remove('hidden');document.body.style.overflow='hidden';}
+function openFormula(){
+  document.getElementById('fml-overlay').classList.remove('hidden');
+  document.body.style.overflow='hidden';
+  /* 항상 이용방법 탭을 먼저 표시 */
+  document.querySelectorAll('.fml-itab').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.fml-panel').forEach(p=>p.classList.remove('on'));
+  const hw=document.getElementById('fml-phowto');
+  if(hw)hw.classList.add('on');
+  const firstTab=document.querySelector('.fml-itab');
+  if(firstTab)firstTab.classList.add('on');
+  const bd=document.querySelector('.fml-bd');
+  if(bd)bd.scrollTop=0;
+}
 function closeFormula(){document.getElementById('fml-overlay').classList.add('hidden');document.body.style.overflow='';}
 function handleOverlayClick(e){if(e.target===document.getElementById('fml-overlay'))closeFormula();}
-function switchFmlTab(idx,btn){document.querySelectorAll('.fml-itab').forEach(b=>b.classList.remove('on'));document.querySelectorAll('.fml-panel').forEach(p=>p.classList.remove('on'));btn.classList.add('on');document.getElementById('fml-p'+idx).classList.add('on');document.querySelector('.fml-bd').scrollTop=0;}
+function switchFmlTab(idx,btn){
+  document.querySelectorAll('.fml-itab').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.fml-panel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  const panelId = idx==='howto' ? 'fml-phowto' : 'fml-p'+idx;
+  document.getElementById(panelId).classList.add('on');
+  document.querySelector('.fml-bd').scrollTop=0;
+}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeFormula();});
 
 /* ════ A4 반응형 스케일링 ════
