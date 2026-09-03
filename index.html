@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>상주감리 산출기 [MANMIN-Ver3.0]</title>
+<title>건축공사 상주감리 대가 산출기 · MANMIN Ver-5.0</title>
 <meta name="description" content="건축법 제25조 · 건축법 시행령 제19조 기준 상주감리 실비정액가산방식 산출기"/>
 <!-- ═══ Open Graph | SNS·카톡·블로그 링크 미리보기 ═══ -->
 <meta property="og:type"         content="website"/>
 <meta property="og:site_name"    content="MANMIN 건축 계산기"/>
-<meta property="og:title"        content="상주감리 산출기 [MANMIN-Ver3.0]"/>
+<meta property="og:title"        content="상주감리 산출기 · MANMIN Ver-5.0"/>
 <meta property="og:description"  content="건축법 제25조 · 건축법 시행령 제19조 기준 상주감리 실비정액가산방식 산출기"/>
 <meta property="og:url"          content="https://manminkim-eng.github.io/KIMMANMIN/arch-supervision/"/>
 <meta property="og:image"        content="https://manminkim-eng.github.io/KIMMANMIN/arch-supervision/icons/icon-512x512.png"/>
@@ -18,14 +18,14 @@
 <meta property="og:locale"       content="ko_KR"/>
 <!-- 트위터/X 카드 -->
 <meta name="twitter:card"        content="summary"/>
-<meta name="twitter:title"       content="상주감리 산출기 [MANMIN-Ver3.0]"/>
+<meta name="twitter:title"       content="상주감리 산출기 · MANMIN Ver-5.0"/>
 <meta name="twitter:description" content="건축법 제25조 · 건축법 시행령 제19조 기준 상주감리 실비정액가산방식 산출기"/>
 <meta name="twitter:image"       content="https://manminkim-eng.github.io/KIMMANMIN/arch-supervision/icons/icon-512x512.png"/>
 <!-- ═══ /Open Graph ═══ -->
 
 <!-- ═══ PWA 설정 ═══ -->
 <link rel="manifest" href="manifest.json"/>
-<meta name="theme-color" content="#2563eb"/>
+<meta name="theme-color" content="#15803d"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="상주감리"/>
@@ -35,67 +35,68 @@
 <link rel="icon" type="image/x-icon" href="./favicon.ico"/>
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png"/>
 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png"/>
-<meta name="msapplication-TileColor" content="#2563eb"/>
+<meta name="msapplication-TileColor" content="#15803d"/>
 <meta name="msapplication-TileImage" content="icons/icon-144x144.png"/>
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"/>
+<link rel="stylesheet" href="./assets/fonts/manmin-fonts.css"/><!-- v5.0 로컬 폴백 폰트 — CDN 차단·오프라인 대비. CDN link 보다 먼저 로드되어야 한다 -->
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
+/* v5.0 — 유니버설 셀렉터에서 font-family 를 뺐다.
+   *{font-family:…!important} 는 .mono·JetBrains Mono·Orbitron 선언을 전부 무효화한다(§3-7). */
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-height:100vh;}
+html,body,button,input,select,textarea,table,th,td,div,span,p,h1,h2,h3,h4,h5,h6,li,label,strong,em,small
+  {font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR Local','Malgun Gothic',sans-serif;}
+body{background:#f4f6f9;color:#1a2744;min-height:100vh;}
 
-/* ══ HEADER ══ */
-.app-header{background:#dbeafe;position:sticky;top:0;z-index:30;box-shadow:0 2px 16px rgba(147,197,253,.4);}
-.header-inner{max-width:1100px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.brand-logo{display:flex;align-items:center;gap:12px;min-width:0;flex:1;}
-.brand-icon{width:40px;height:40px;background:#2563eb;border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(37,99,235,.35);flex-shrink:0;}
-.brand-icon svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+/* ── HEADER ── */
+/* v5.0 — 헤더+탭바를 하나의 그라데이션 면으로 통합한다(§3-2-1). sticky 금지(§3-1).
+   v5.0-HDR (2026-09-02 확정 §18-1) — 줄높이 px 고정 · flex-start · 활성탭 단색+바 · 헤더 버튼 0개 */
+.hdr-shell{background:linear-gradient(135deg,#052e16 0%,#15803d 50%,#16a34a 100%);
+  box-shadow:0 2px 20px rgba(21,128,61,.35);}
+.app-header{background:transparent;color:#fff;}
+.header-inner{max-width:1300px;margin:0 auto;padding:20px 24px 16px;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.brand-logo{display:flex;align-items:flex-start;min-width:0;}
 .brand-texts{min-width:0;}
-.brand-title{font-size:16px;font-weight:900;color:#1e3a8a;letter-spacing:-.02em;line-height:1.25;}
-.brand-sub{font-size:10px;color:#3b82f6;margin-top:2px;white-space:nowrap;}
-.btn-print{background:#e63312;color:#fff;border:none;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:7px;font-family:inherit;transition:background .18s,transform .1s;box-shadow:0 2px 10px rgba(230,51,18,.38);white-space:nowrap;flex-shrink:0;}
-.btn-print:hover{background:#c62a0c;}
-.btn-print:active{transform:scale(.97);}
-.btn-print svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.btn-print-text{display:inline;}
+.hdr-eyebrow{font-size:11px;font-weight:600;opacity:.7;color:#fff;letter-spacing:.15em;line-height:16px;
+  text-transform:uppercase;margin-bottom:6px;}
+.hdr-h1{font-size:26px;font-weight:900;color:#fff;letter-spacing:.04em;line-height:1.2;}
+.hdr-sub{font-size:11px;margin-top:8px;color:#fff;opacity:.85;letter-spacing:.02em;line-height:17px;}
+.hdr-manmin{font-family:'Orbitron',sans-serif!important;font-weight:900;font-size:12px;
+  color:#86efac;letter-spacing:.08em;text-shadow:0 0 8px rgba(134,239,172,.6);
+  white-space:nowrap;display:inline-block;line-height:17px;vertical-align:top;}
+.hdr-right-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:6px;
+  padding-bottom:2px;flex-shrink:0;}
+.hdr-right{text-align:right;opacity:.75;color:#fff;font-size:11px;line-height:16px;}   /* 4줄 13/11/11/10 = 70px ≤ 78.2 */
+.hdr-right strong{font-size:13px;font-weight:700;line-height:19px;}
+.hdr-right em{font-size:10px;color:#86efac;font-style:normal;display:block;margin-top:4px;line-height:15px;}
+@media(max-width:768px){ .hdr-right{display:none;} .hdr-right-wrap{gap:0;} }
+@media(max-width:640px){
+  .hdr-h1{font-size:18px;}
+  /* eyebrow 표시 · sub 11px · 각인 12px 유지 · 좌우 14px · 유령 gap 제거 (01 마스터 실측 §18-4) */
+  .header-inner{padding:20px 14px 16px;row-gap:0;}
+  .hdr-right-wrap{padding-bottom:0;}
+  .tab-bar-inner{padding:4px 14px 0;}
+}
 
-/* ── PWA 헤더 설치 버튼 ── */
-#pwa-hdr-btn{
-  display:none;align-items:center;gap:6px;
-  background:linear-gradient(135deg,#f97316,#ea580c);
-  color:#fff;border:none;padding:9px 14px;border-radius:9px;
-  font-size:12px;font-weight:800;cursor:pointer;
-  font-family:inherit;white-space:nowrap;flex-shrink:0;
-  transition:all .15s;
-  animation:hdr-pulse 2.2s ease-in-out infinite;
-}
-#pwa-hdr-btn.visible{display:flex;}
-#pwa-hdr-btn:hover{background:linear-gradient(135deg,#ea580c,#c2410c);transform:translateY(-1px);}
-@keyframes hdr-pulse{
-  0%,100%{box-shadow:0 2px 10px rgba(249,115,22,.4);}
-  50%{box-shadow:0 2px 20px rgba(249,115,22,.7);}
-}
-@media(max-width:520px){#pwa-hdr-btn .pwa-hdr-txt{display:none;}}
-/* ══ PWA 헤더 버튼 강화 (건축상주 Edition) ══ */
-#pwa-hdr-btn{
-  display:none;align-items:center;gap:6px;
-  background:linear-gradient(135deg,#f97316,#2563eb) !important;
-  color:#fff !important;border:none;padding:9px 14px;border-radius:9px;
-  font-size:12px;font-weight:800;cursor:pointer;
-  font-family:inherit;white-space:nowrap;flex-shrink:0;
-  transition:all .2s;
-  box-shadow:0 2px 12px rgba(249,115,22,.45);
-  animation:res-pwa-glow 2.5s ease-in-out infinite;
-}
-#pwa-hdr-btn.visible{display:flex !important;}
-#pwa-hdr-btn:hover{
-  background:linear-gradient(135deg,#ea580c,#1d4ed8) !important;
-  transform:translateY(-1px) !important;
-  box-shadow:0 4px 18px rgba(249,115,22,.65) !important;
-  animation:none !important;
-}
-@keyframes res-pwa-glow{
-  0%,100%{box-shadow:0 2px 12px rgba(249,115,22,.45);}
-  50%{box-shadow:0 2px 22px rgba(249,115,22,.75),0 0 10px rgba(37,99,235,.25);}
-}
+/* ── TAB BAR ── */
+.tab-bar{background:transparent;overflow-x:auto;scrollbar-width:none;}   /* 배경은 .hdr-shell 이 담당 */
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-bar-inner{max-width:1300px;margin:0 auto;padding:4px 24px 0;display:flex;}
+.tb{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.75);font-family:inherit;
+  padding:11px 16px;font-size:13px;font-weight:700;letter-spacing:.02em;line-height:19px;
+  border-bottom:3px solid transparent;   /* 11+19+11+3 = 44px */
+  transition:all .15s;display:flex;align-items:center;gap:5px;
+  white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
+.tb:hover{color:#fff;background:rgba(255,255,255,.09);}
+.tb.active{color:#fff;background:#15803d;border-bottom-color:#86efac;}
+/* v5.0-HDR — 요약 스트립 (헤더 3층) */
+.sum-bar-wrap{background:#0f172a;padding:10px 0;}
+.sum-bar{max-width:1300px;margin:0 auto;padding:0 24px;display:flex;flex-wrap:wrap;gap:14px;}
+.sum-item{font-size:12px;color:#94a3b8;line-height:18px;}
+.sum-item b{font-family:'JetBrains Mono','Noto Sans KR',monospace;font-weight:700;color:#86efac;}
+@media(max-width:640px){.sum-bar{padding:0 14px;}.sum-item{font-size:11px;}}
 
 /* ══ 배너 강화 ══ */
 .pwa-install-banner{
@@ -118,7 +119,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
   object-fit:cover;
 }
 .pwa-banner-title{font-size:14px !important;font-weight:800 !important;color:#fff !important;}
-.pwa-banner-desc{font-size:11px !important;color:#93c5fd !important;margin-top:3px !important;font-weight:600 !important;}
+.pwa-banner-desc{font-size:11px !important;color:#86efac !important;margin-top:3px !important;font-weight:600 !important;}
 
 .pwa-btn-install{
   background:linear-gradient(135deg,#f97316,#ea580c) !important;
@@ -138,7 +139,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
   cursor:pointer;font-family:inherit;
   transition:all .15s !important;white-space:nowrap;
 }
-.pwa-btn-dismiss:hover{color:#eff6ff !important;}
+.pwa-btn-dismiss:hover{color:#f0fdf4 !important;}
 
 /* ══ iOS 안내 모달 ══ */
 #ios-modal-res{
@@ -164,28 +165,16 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
   background:rgba(249,115,22,.35);border:1px solid rgba(249,115,22,.6);
   color:#fed7aa;font-size:11px;font-weight:800;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.ri-txt{font-size:13px;color:#bfdbfe;line-height:1.5;}
+.ri-txt{font-size:13px;color:#bbf7d0;line-height:1.5;}
 .ri-txt strong{color:#fff;}
-.ri-foot{text-align:center;font-size:11px;color:#93c5fd;margin-top:12px;}
+.ri-foot{text-align:center;font-size:11px;color:#86efac;margin-top:12px;}
 
 @media(max-width:480px){
-  #pwa-hdr-btn .pwa-hdr-txt{display:none;}
-  #pwa-hdr-btn{padding:9px 11px;}
   .pwa-install-banner{bottom:10px !important;left:10px !important;right:10px !important;padding:13px 14px !important;}
   .pwa-install-banner img{width:42px !important;height:42px !important;}
 }
-@media(max-width:360px){.pwa-banner-desc{display:none;}}
+@media(max-width:420px){.pwa-banner-desc{display:none;}}
 
-
-/* ══ TAB BAR ══ */
-.tab-bar{background:#bfdbfe;border-top:1px solid rgba(147,197,253,.4);overflow-x:auto;scrollbar-width:none;}
-.tab-bar::-webkit-scrollbar{display:none;}
-.tab-bar-inner{max-width:1100px;margin:0 auto;padding:0 8px;display:flex;}
-.tab-btn{background:none;border:none;cursor:pointer;color:#1e40af;font-family:inherit;padding:12px 18px;font-size:13px;font-weight:700;position:relative;transition:color .18s,background .18s;display:flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0;}
-.tab-btn:hover{color:#1e3a8a;background:rgba(30,58,138,.07);}
-.tab-btn.active{color:#1e3a8a;}
-.tab-btn.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:#f97316;border-radius:2px 2px 0 0;}
-.tab-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 
 /* ══ MAIN ══ */
 .main-wrap{max-width:1100px;margin:0 auto;padding:20px 16px 90px;}
@@ -194,7 +183,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* ══ TOTAL BANNER ══ */
-.total-banner{background:linear-gradient(135deg,#0c4da2 0%,#1565c0 100%);border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;box-shadow:0 4px 20px rgba(12,77,162,.2);gap:12px;flex-wrap:wrap;}
+.total-banner{background:linear-gradient(135deg,#15803d 0%,#16a34a 100%);border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;box-shadow:0 4px 20px rgba(21,128,61,.2);gap:12px;flex-wrap:wrap;}
 .total-banner-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.65);letter-spacing:.06em;text-transform:uppercase;}
 .total-banner-desc{font-size:11px;color:rgba(255,255,255,.45);margin-top:3px;}
 .total-banner-amount{font-size:26px;font-weight:900;color:#fff;letter-spacing:-.02em;}
@@ -215,34 +204,34 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 .card{background:#fff;border:1px solid #e4e9f0;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.05);}
 .card-header{display:flex;align-items:center;gap:10px;padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid #eef1f6;flex-wrap:wrap;}
 .card-icon{width:30px;height:30px;border-radius:8px;background:#eaf0fb;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.card-icon svg{width:14px;height:14px;stroke:#0c4da2;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.card-icon svg{width:14px;height:14px;stroke:#15803d;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .card-title{font-size:13px;font-weight:800;color:#1a2744;}
 .card-badge{margin-left:auto;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;background:#fff3ed;color:#c2410c;border:1px solid #fed7aa;white-space:nowrap;}
-.card-badge-blue{margin-left:auto;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;white-space:nowrap;}
+.card-badge-blue{margin-left:auto;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;background:#f0fdf4;color:#1d4ed8;border:1px solid #bbf7d0;white-space:nowrap;}
 
 /* ══ FIELDS ══ */
 .field-label{font-size:10px;font-weight:700;color:#6b7a99;letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px;}
-.fire-input{width:100%;padding:9px 12px;background:#f8fafd;border:1.5px solid #dde3ed;border-radius:8px;color:#1a2744;font-size:13px;font-weight:600;font-family:'Pretendard',sans-serif;outline:none;transition:border-color .18s,box-shadow .18s;}
-.fire-input:focus{border-color:#0c4da2;box-shadow:0 0 0 3px rgba(12,77,162,.12);background:#fff;}
+.fire-input{width:100%;padding:9px 12px;background:#f8fafd;border:1.5px solid #dde3ed;border-radius:8px;color:#1a2744;font-size:13px;font-weight:600;font-family:inherit;outline:none;transition:border-color .18s,box-shadow .18s;}
+.fire-input:focus{border-color:#15803d;box-shadow:0 0 0 3px rgba(21,128,61,.12);background:#fff;}
 .fire-input:disabled{opacity:.35;cursor:not-allowed;background:#f1f4f9;}
 .fire-input.red-border{border-color:#fca5a5;}
 .fire-input.red-border:focus{border-color:#e63312;box-shadow:0 0 0 3px rgba(230,51,18,.12);}
-.fire-select{width:100%;padding:9px 28px 9px 11px;background:#f8fafd;border:1.5px solid #dde3ed;border-radius:8px;color:#1a2744;font-size:12px;font-weight:700;font-family:'Pretendard',sans-serif;outline:none;cursor:pointer;transition:border-color .18s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230c4da2' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
-.fire-select:focus{border-color:#0c4da2;box-shadow:0 0 0 3px rgba(12,77,162,.12);background-color:#fff;}
+.fire-select{width:100%;padding:9px 28px 9px 11px;background:#f8fafd;border:1.5px solid #dde3ed;border-radius:8px;color:#1a2744;font-size:12px;font-weight:700;font-family:inherit;outline:none;cursor:pointer;transition:border-color .18s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230c4da2' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
+.fire-select:focus{border-color:#15803d;box-shadow:0 0 0 3px rgba(21,128,61,.12);background-color:#fff;}
 
 /* ══ WORKER SLOTS ══ */
 .worker-slot{border:1.5px solid #e4e9f0;border-radius:10px;padding:13px;margin-bottom:10px;background:#fafbfd;}
-.worker-slot.arch{border-left:3px solid #0c4da2;}
+.worker-slot.arch{border-left:3px solid #15803d;}
 .worker-slot.mech{border-left:3px solid #0891b2;}
 .worker-slot.civil{border-left:3px solid #7c3aed;}
 .worker-slot.nonresident{border-left:3px solid #94a3b8;background:#f8fafd;}
 .worker-tag{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
 .tag-pill{padding:2px 8px;border-radius:20px;font-size:9px;font-weight:700;}
-.tag-blue{background:#dbeafe;color:#1d4ed8;}
+.tag-blue{background:#dcfce7;color:#1d4ed8;}
 .tag-cyan{background:#cffafe;color:#0e7490;}
 .tag-purple{background:#ede9fe;color:#6d28d9;}
 .tag-gray{background:#f1f5f9;color:#64748b;}
-.mini-calc{margin-top:8px;padding:6px 10px;border-radius:6px;background:#eff6ff;font-size:10px;color:#1d4ed8;font-weight:600;word-break:break-all;}
+.mini-calc{margin-top:8px;padding:6px 10px;border-radius:6px;background:#f0fdf4;font-size:10px;color:#1d4ed8;font-weight:600;word-break:break-all;}
 .mini-calc.cyan{background:#ecfeff;color:#0e7490;}
 .mini-calc.purple{background:#f5f3ff;color:#6d28d9;}
 .mini-calc.gray{background:#f8fafd;color:#64748b;}
@@ -258,19 +247,19 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 .rate-slot{background:#f8fafd;border:1.5px solid #dde3ed;border-radius:10px;padding:13px;}
 .rate-slot-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
 .rate-slot-label{font-size:10px;font-weight:800;color:#6b7a99;letter-spacing:.07em;text-transform:uppercase;}
-.rate-slot-value{font-size:17px;font-weight:900;color:#0c4da2;}
+.rate-slot-value{font-size:17px;font-weight:900;color:#15803d;}
 .rate-slot-value.red{color:#e63312;}
 .rate-range-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;background:#fff3ed;color:#c2410c;border:1px solid #fed7aa;margin-bottom:8px;display:inline-block;}
 .rate-slider{width:100%;height:4px;border-radius:2px;outline:none;cursor:pointer;margin:8px 0 4px;-webkit-appearance:none;appearance:none;}
-.rate-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:#0c4da2;border:2px solid #fff;box-shadow:0 1px 6px rgba(12,77,162,.35);cursor:pointer;}
+.rate-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:#15803d;border:2px solid #fff;box-shadow:0 1px 6px rgba(21,128,61,.35);cursor:pointer;}
 .rate-slider.red-thumb::-webkit-slider-thumb{background:#e63312;}
-.rate-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#0c4da2;border:2px solid #fff;cursor:pointer;}
+.rate-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#15803d;border:2px solid #fff;cursor:pointer;}
 .rate-minmax{display:flex;justify-content:space-between;font-size:9px;color:#94a3b8;font-weight:600;}
 .rate-sub{font-size:10px;color:#64748b;margin-top:5px;word-break:break-all;}
 .rate-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .vat-toggle{display:flex;align-items:center;gap:10px;padding:11px 13px;background:#f8fafd;border:1.5px solid #dde3ed;border-radius:8px;cursor:pointer;margin-top:12px;transition:border-color .18s;}
-.vat-toggle:hover{border-color:#0c4da2;}
-.vat-toggle input[type=checkbox]{accent-color:#0c4da2;width:16px;height:16px;cursor:pointer;flex-shrink:0;}
+.vat-toggle:hover{border-color:#15803d;}
+.vat-toggle input[type=checkbox]{accent-color:#15803d;width:16px;height:16px;cursor:pointer;flex-shrink:0;}
 .vat-toggle label{font-size:12px;font-weight:700;color:#4a5568;cursor:pointer;}
 
 /* ══ LABOR SUMMARY ══ */
@@ -278,13 +267,13 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 .labor-summary-title{font-size:10px;font-weight:800;color:#6b7a99;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;}
 .labor-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:11px;gap:8px;}
 .labor-row-label{color:#4a5568;font-weight:600;}
-.labor-row-val{color:#0c4da2;font-weight:800;text-align:right;}
+.labor-row-val{color:#15803d;font-weight:800;text-align:right;}
 .labor-total-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0 0;border-top:1.5px solid #dde3ed;margin-top:4px;gap:8px;}
 .labor-total-row .lt-label{color:#1a2744;font-weight:800;font-size:12px;}
 .labor-total-row .lt-val{color:#e63312;font-weight:900;font-size:14px;}
 
 /* ══ MISC ══ */
-.law-strip{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 13px;margin-bottom:18px;display:flex;align-items:flex-start;gap:9px;}
+.law-strip{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 13px;margin-bottom:18px;display:flex;align-items:flex-start;gap:9px;}
 .law-strip svg{width:14px;height:14px;stroke:#1d4ed8;fill:none;stroke-width:2;flex-shrink:0;margin-top:2px;}
 .law-strip-text{font-size:11px;color:#1e40af;font-weight:600;line-height:1.7;}
 .law-strip-text strong{color:#1d4ed8;}
@@ -292,59 +281,83 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 
 /* ══ REF ══ */
 .ref-block{border:1px solid #e4e9f0;border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.04);margin-bottom:16px;}
-.ref-block-header{background:#0c4da2;padding:9px 15px;font-size:11px;font-weight:800;color:#fff;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.ref-block-header{background:#15803d;padding:9px 15px;font-size:11px;font-weight:800;color:#fff;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
 .ref-block-header svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;}
 .ref-block-body{padding:13px 15px;}
 .ref-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f4f9;font-size:12px;gap:8px;}
 .ref-item:last-child{border-bottom:none;}
 .ref-item-label{color:#64748b;font-weight:600;}
-.ref-item-value{color:#0c4da2;font-weight:700;text-align:right;}
+.ref-item-value{color:#15803d;font-weight:700;text-align:right;}
 
-/* ══ A4 미리보기 모바일 안내 배너 ══ */
-.a4-mobile-hint{
-  display:none; /* 모바일에서만 표시 */
-  align-items:center;gap:6px;
-  background:#eff6ff;border-bottom:1px solid #bfdbfe;
-  padding:8px 14px;font-size:10px;font-weight:600;color:#1e40af;
+/* ── A4 미리보기 (v5.0 §3-3 · §3-4 · §3-4-1 · §17-2) ── */
+.a4-export-bar{background:#fff;border:1px solid #dcfce7;border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.bar-lbl{font-size:11px;font-weight:700;color:#166534;}
+/* 출력 버튼 규격 (§3-6). 진입점은 이 출력바 한 곳뿐이다(헤더 버튼·FAB 출력·모바일 탭 제거). */
+.btn-export,.mm-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px 16px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer;
+  border:none;font-family:inherit;white-space:nowrap;line-height:1.2;min-height:38px;
+  transition:background .15s,box-shadow .15s,transform .1s;}
+.mm-btn-print{background:#15803d;color:#fff;}
+.mm-btn-jpg{background:#7e22ce;color:#fff;}
+/* ⛔ width:100% 는 출력바 안으로 한정한다(§16-5). 전역이면 저장 시트 닫기 버튼까지 100% 를 먹는다. */
+@media(max-width:480px){ .a4-export-bar{flex-direction:column;align-items:stretch;}
+  .a4-export-bar .btn-export,.a4-export-bar .mm-btn{width:100%;} }
+.a4-wrap{background:#64748b;padding:20px 20px 32px;min-height:300px;display:flex;justify-content:center;align-items:flex-start;border-radius:10px;overflow:hidden;}
+@media(max-width:640px){.a4-wrap{padding:8px 8px 24px;}}
+.a4-scale-wrap{display:block;transform-origin:top center;flex-shrink:0;}
+/* ⛔ .a4-page 는 언제나 794px 고정(§17-2). 좁은 화면은 .a4-scale-wrap 의 transform:scale() 이 담당한다.
+   화면 여백 = @page 여백 (14/12/22/14mm → 53/45/83/53px) → 내용 영역 696×986px = 184×261mm */
+/* 32·33 — 1매 고정 산출서 폼: height 1123px 고정 + flex column (.a4-sign{margin-top:auto} 가 서명란을 하단에 붙인다) */
+.a4-page{background:#fff;width:794px;height:1123px;min-height:1123px;margin:0;padding:53px 45px 83px 53px;box-shadow:0 8px 40px rgba(0,0,0,.28);font-size:11px;color:#1a1a1a;display:flex;flex-direction:column;position:relative;overflow:hidden;
+  font-family:'Noto Sans KR Local','Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+.a4-page .mono,.a4-page code{font-family:'JetBrains Mono','Noto Sans KR Local',monospace;}
+/* JPG 저장 시트 (§3-5 · §3-5-3) — 1매여도 뜬다. */
+#mm-save-ov{display:none;position:fixed;inset:0;z-index:9999;background:rgba(12,26,46,.82);
+  align-items:center;justify-content:center;padding:18px;}
+#mm-save-ov.show{display:flex;}
+.mm-sheet{background:#fff;border:1px solid #dcfce7;border-radius:14px;width:100%;max-width:720px;
+  max-height:88vh;display:flex;flex-direction:column;box-shadow:0 24px 70px rgba(0,0,0,.45);}
+.mm-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 18px;border-bottom:1px solid #e2e8f0;}
+.mm-sheet-title{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:900;
+  letter-spacing:.12em;color:#15803d;text-transform:uppercase;}
+.mm-sheet-note{font-size:11px;color:#64748b;margin-top:4px;}
+.mm-sheet-body{padding:16px 18px;overflow-y:auto;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+.mm-shot{background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:9px;
+  display:flex;flex-direction:column;gap:8px;}
+.mm-shot img{width:100%;height:auto;border-radius:4px;background:#fff;display:block;
+  border:1px solid #e2e8f0;}
+.mm-shot-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:7px 10px;
+  border-radius:7px;border:1px solid #c4b5fd;background:none;color:#7e22ce;
+  font-family:inherit;font-size:11.5px;font-weight:700;cursor:pointer;transition:background .15s;}
+.mm-shot-btn:hover{background:#f5f3ff;}
+.mm-sheet-foot{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;
+  padding:13px 18px;border-top:1px solid #e2e8f0;}
+.mm-btn-close{background:#e2e8f0;color:#334155;}
+.mm-sheet-head > div:first-child{flex:1 1 auto;min-width:0;}
+.mm-sheet-head .btn-export{flex:0 0 auto;}
+@media(max-width:480px){
+  .mm-sheet-body{grid-template-columns:1fr;padding:12px;}
+  .mm-sheet-body.multi{grid-template-columns:repeat(2,1fr);}
+  .mm-sheet-foot{justify-content:stretch;} .mm-sheet-foot .btn-export{flex:1;}
+  .mm-sheet-head{padding:12px 14px;gap:8px;}
+  .mm-sheet-title{font-size:10px;}
+  .mm-sheet-note{font-size:10px;line-height:1.45;}
+  .mm-sheet-head .btn-export{padding:6px 9px!important;min-height:28px!important;
+    font-size:10.5px!important;align-self:flex-start;}
+  .mm-shot{padding:7px;} .mm-shot-btn{padding:6px;font-size:11px;}
+  .mm-shot img{max-height:46vh;object-fit:contain;}
 }
-@media(max-width:860px){
-  .a4-mobile-hint{display:flex;}
-}
-@media print{.a4-mobile-hint{display:none!important;}}
+/* v5.0 — 버전 각인 삭제: 1매 고정 폼이라 fixed 각인이 A4 푸터와 겹친다. 푸터 .a4-footer-ver 가 버전 표기를 담당한다. */
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(14px);background:#0c1a2e;color:#fff;padding:8px 16px;border-radius:16px;font-size:12px;font-weight:700;opacity:0;transition:all .25s;z-index:9500;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-/* ══ A4 미리보기 — 완전 반응형 스케일링 ══ */
-.result-wrap{
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  padding:24px 12px;
-  overflow:hidden;          /* 가로 스크롤 제거 */
-  background:#e8ecf1;
-  min-height:100px;         /* JS가 높이를 동적으로 계산 */
-}
-/* 스케일 래퍼: transform 기준점 */
-.a4-scale-wrap{
-  transform-origin:top center;
-  flex-shrink:0;
-  /* JS에서 transform:scale()과 부모 높이를 설정 */
-}
-.a4-page{
-  font-family:'Pretendard',sans-serif;
-  width:210mm;height:297mm;min-height:297mm;
-  padding:12mm 18mm 10mm 18mm;
-  background:#fff;color:#1a1a1a;
-  box-sizing:border-box;
-  box-shadow:0 6px 40px rgba(0,0,0,.18);
-  border:1px solid #c8d0dc;
-  display:flex;flex-direction:column;
-  overflow:hidden;flex-shrink:0;
-}
-/* 상단/하단 바 */
-.a4-top-bar{height:6px;background:#0c4da2;border-radius:2px;margin-bottom:16px;flex-shrink:0;}
-.a4-bot-bar{height:6px;background:#0c4da2;border-radius:2px;}
+.a4-top-bar{height:6px;background:#15803d;border-radius:2px;margin-bottom:16px;flex-shrink:0;}
+.a4-bot-bar{height:6px;background:#15803d;border-radius:2px;}
 /* 제목 */
 .a4-title{text-align:center;margin-bottom:14px;flex-shrink:0;}
-.a4-title h2{font-size:22px;font-weight:900;color:#0c4da2;letter-spacing:-.01em;}
+.a4-title h2{font-size:22px;font-weight:900;color:#15803d;letter-spacing:-.01em;}
 /* 테이블 공통 */
 .a4-tbl{width:100%;border-collapse:collapse;table-layout:fixed;flex-shrink:0;}
 .a4-tbl th,.a4-tbl td{
@@ -355,11 +368,11 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
   font-size:12px;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
-.a4-tbl thead tr{background:#0c4da2;color:#fff;}
+.a4-tbl thead tr{background:#15803d;color:#fff;}
 .a4-tbl thead th{font-size:12px;font-weight:700;text-align:center;height:36px;}
 /* 공사정보 테이블 */
 .a4-info-tbl{margin-bottom:12px;}
-.a4-th{background:#dbeafe;font-weight:700;text-align:center;color:#0c4da2;font-size:11.5px;}
+.a4-th{background:#dcfce7;font-weight:700;text-align:center;color:#15803d;font-size:11.5px;}
 .a4-td{font-weight:600;font-size:12px;}
 .a4-td-c{text-align:center;font-size:12px;}
 /* 산출내역 테이블 */
@@ -368,18 +381,18 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 .a4-sub-item{background:#fff;font-weight:500;text-align:left;padding-left:26px;font-size:10.5px;color:#334155;}
 .a4-desc{text-align:right;font-size:10.5px;color:#5a6a80;font-style:italic;}
 .a4-amt{text-align:right;font-weight:700;font-size:12px;}
-.a4-row-sub{background:#dbeafe;}
-.a4-row-sub td{color:#0c4da2;font-weight:800;font-size:12px;}
+.a4-row-sub{background:#dcfce7;}
+.a4-row-sub td{color:#15803d;font-weight:800;font-size:12px;}
 .a4-row-nego td{color:#dc2626;}
 .a4-row-vat td{color:#1d4ed8;}
 /* 합계금액 행 */
-.a4-tfoot-row{background:#0c4da2;}
+.a4-tfoot-row{background:#15803d;}
 .a4-tfoot-row td{color:#fff;font-weight:800;font-size:14px;height:46px;letter-spacing:.08em;text-align:center;}
 .a4-tfoot-row .a4-amt{font-size:18px;font-weight:900;}
 /* 서명 영역 */
 .a4-sign{margin-top:auto;padding-top:10px;flex-shrink:0;}
 .a4-sign-submit{font-size:12px;color:#334155;margin-bottom:6px;text-align:right;}
-.a4-sign-date{font-size:15px;font-weight:800;letter-spacing:.16em;color:#0c4da2;margin-bottom:8px;text-align:right;}
+.a4-sign-date{font-size:15px;font-weight:800;letter-spacing:.16em;color:#15803d;margin-bottom:8px;text-align:right;}
 .a4-sign-legal{border-top:1.5px solid #dde3ed;padding-top:6px;margin-bottom:8px;}
 .a4-sign-legal p{font-size:8.5px;color:#94a3b8;line-height:1.7;}
 .a4-sign-legal .lbl{font-size:9.5px;font-weight:700;color:#64748b;margin-bottom:3px;}
@@ -389,34 +402,54 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 /* 하단 푸터 */
 .a4-footer{flex-shrink:0;margin-top:10px;}
 .a4-footer-ver{text-align:right;font-size:7.5px;font-weight:700;color:#94a3b8;letter-spacing:.12em;margin-top:3px;}
+/* v5.0 — 1매 고정: @page 14/12/22/14mm 내용높이 987px 에 맞춰 행높이 축소(실측 1079→1040) */
+.a4-tbl th,.a4-tbl td{height:32px;}
+.a4-tbl thead th{height:34px;}
+.a4-tfoot-row td{height:44px;}
 
-/* ══ PRINT — 미리보기 1:1, ISO A4 ══ */
+/* ── 인쇄 전용 (v5.0 §3-3 · §16-9 · §16-13 · §16-15 · §17-3) ── */
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
-  .no-print{display:none!important;}
-  html,body{margin:0;padding:0;background:#fff;}
-  .main-wrap{padding:0;margin:0;}
-  .main-wrap>.tab-panel{display:none!important;}
-  .main-wrap>#tab-result{display:block!important;padding:0;margin:0;}
-  .result-wrap{padding:0;margin:0;display:block;overflow:visible;background:#fff;min-height:unset!important;}
-  .a4-scale-wrap{transform:none!important;width:auto!important;}
-  .a4-page{
-    border:none!important;box-shadow:none!important;margin:0!important;
-    width:210mm!important;height:297mm!important;min-height:unset!important;
-    padding:12mm 18mm 10mm 18mm!important;
-  }
-  @page{size:A4 portrait;margin:0;}
+  html,body{background:#fff!important;margin:0;padding:0;}
+  .hdr-shell,.app-header,.tab-bar,.sum-bar-wrap,.main-wrap .tab-panel:not(#tab-result),.a4-export-bar,
+  .fml-overlay,#fab-group,.toast,.pwa-install-banner,#ios-modal-res,#mm-save-ov,.no-print{display:none!important;}
+  #tab-result{display:block!important;}
+  /* ⛔ 컨테이너 패딩이 남으면 A4 가 아래로 밀린다(§16-15). A4 패널이 .main-wrap 안이라 패딩만 해제한다. */
+  .main-wrap{padding:0!important;margin:0!important;max-width:none!important;}
+  .a4-wrap{background:#fff!important;padding:0!important;min-height:unset!important;border-radius:0!important;display:block!important;}
+  .a4-scale-wrap{transform:none!important;margin:0!important;height:auto!important;width:auto!important;max-width:none!important;}
+  /* 여백은 @page 하나로만 일원화한다(§3-3). .a4-page 자체 패딩은 인쇄 시 해제. */
+  /* 1매 고정 폼: 세로 = 297-14-22 = 261mm. 화면 padding 53/45/83/53 은 @page 여백이 대신한다. */
+  .a4-page{width:100%!important;max-width:100%!important;height:261mm!important;min-height:unset!important;box-shadow:none!important;border:none!important;
+    padding:0!important;margin:0!important;overflow:visible!important;}
+  .a4-tbl{break-inside:avoid;page-break-inside:avoid;}
+  @page{size:A4 portrait;margin:14mm 12mm 22mm 14mm;}
 }
 
 /* ══════════════════════════════════════════════
    📐 계산식 안내 — FAB + 모달 (완전 반응형)
 ══════════════════════════════════════════════ */
 
-/* FAB 버튼 */
-.fml-fab{position:fixed;bottom:22px;right:18px;z-index:1200;background:linear-gradient(135deg,#0c4da2,#0a3270);color:#fff;border:none;border-radius:16px;padding:11px 14px;cursor:pointer;box-shadow:0 4px 22px rgba(12,77,162,.55);display:flex;flex-direction:column;align-items:center;gap:2px;font-family:'Pretendard',sans-serif;line-height:1.3;transition:transform .15s,box-shadow .15s;}
-.fml-fab:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(12,77,162,.72);}
-.fml-fab:active{transform:translateY(0);}
-@media print{.fml-fab{display:none!important;}}
+/* ══ FAB · 모달 (v5.0 §18-11 — 09 제연 기준본 규격 · 색만 기계 토큰) ══ */
+#fab-group{position:fixed;bottom:18px;right:18px;z-index:1200;display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.help-fab{
+  position:relative;z-index:auto;
+  background:linear-gradient(135deg,#052e16 0%,#15803d 55%,#16a34a 100%);
+  border:1px solid rgba(134,239,172,.3);
+  color:#fff;border-radius:16px;padding:11px 8px;width:72px;min-width:72px;cursor:pointer;font-family:inherit;   /* 두 버튼 폭·높이 완전 동일 (§16-18 취지 · MIN 2026-09-03) */
+  box-shadow:0 4px 20px rgba(21,128,61,.65);
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  line-height:1.3;transition:transform .15s,box-shadow .15s;
+  animation:fabIn .55s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes fabIn{from{opacity:0;transform:scale(.3) rotate(-20deg);}to{opacity:1;transform:scale(1) rotate(0);}}
+.help-fab:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(21,128,61,.65);}
+.help-fab:active{transform:translateY(0);}
+.help-fab .fab-icon{font-size:20px;line-height:1;}
+.help-fab .fab-lbl{font-size:10px;font-weight:800;letter-spacing:.04em;color:#fff;}
+.help-fab .fab-sub{font-size:9px;opacity:.8;}
+
+@media(max-width:540px){ #fab-group{bottom:16px;right:12px;} .help-fab{padding:10px 8px;} }
 
 /* 오버레이 */
 .fml-overlay{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.60);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:16px;animation:fmlFadeIn .2s ease-out;}
@@ -429,7 +462,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 @keyframes fmlSlideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
 
 /* 모달 헤더 */
-.fml-hd{background:linear-gradient(135deg,#081e44,#0c4da2,#1565c0);color:#fff;padding:18px 20px 0;flex-shrink:0;}
+.fml-hd{background:linear-gradient(135deg,#052e16,#15803d,#16a34a);color:#fff;padding:18px 20px 0;flex-shrink:0;}
 .fml-hd-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:10px;}
 .fml-close-btn{background:rgba(255,255,255,.13);border:none;color:#fff;border-radius:50%;width:34px;height:34px;flex-shrink:0;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:background .15s;font-family:inherit;}
 .fml-close-btn:hover{background:rgba(255,255,255,.28);}
@@ -437,14 +470,14 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 /* 모달 내부 탭 */
 .fml-itabs{display:flex;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
 .fml-itabs::-webkit-scrollbar{display:none;}
-.fml-itab{padding:10px 16px;border:none;background:transparent;color:rgba(255,255,255,.6);font-size:12px;font-weight:700;font-family:'Pretendard',sans-serif;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .15s;flex-shrink:0;}
+.fml-itab{padding:10px 16px;border:none;background:transparent;color:rgba(255,255,255,.6);font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .15s;flex-shrink:0;}
 .fml-itab:hover:not(.on){color:rgba(255,255,255,.88);}
-.fml-itab.on{color:#fff;border-bottom-color:#f97316;}
+.fml-itab.on{color:#fff;border-bottom-color:#86efac;}
 
 /* 모달 바디 */
 .fml-bd{overflow-y:auto;padding:20px 20px 28px;flex:1;-webkit-overflow-scrolling:touch;}
 .fml-bd::-webkit-scrollbar{width:5px;}
-.fml-bd::-webkit-scrollbar-thumb{background:#bfdbfe;border-radius:3px;}
+.fml-bd::-webkit-scrollbar-thumb{background:#bbf7d0;border-radius:3px;}
 .fml-bd::-webkit-scrollbar-track{background:transparent;}
 
 /* 패널 */
@@ -460,13 +493,13 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 .fml-card-ttl{font-size:12px;font-weight:800;color:#1a2744;margin-bottom:6px;}
 
 /* 수식 */
-.fml-eq{display:block;font-family:monospace;font-size:12px;font-weight:700;color:#0c4da2;background:#eff6ff;border-radius:7px;padding:8px 11px;margin:6px 0;word-break:break-all;line-height:1.75;}
+.fml-eq{display:block;font-family:monospace;font-size:12px;font-weight:700;color:#15803d;background:#f0fdf4;border-radius:7px;padding:8px 11px;margin:6px 0;word-break:break-all;line-height:1.75;}
 .fml-eq.hi{background:#fff7ed;color:#c2410c;}
 .fml-eq.grn{background:#f0fdf4;color:#15803d;}
 .fml-note{font-size:10px;color:#64748b;margin-top:5px;line-height:1.8;}
 
 /* 강조 박스 */
-.fml-hi{border:1.5px solid #bfdbfe;background:#eff6ff;border-radius:10px;padding:12px 13px;margin-bottom:8px;}
+.fml-hi{border:1.5px solid #bbf7d0;background:#f0fdf4;border-radius:10px;padding:12px 13px;margin-bottom:8px;}
 .fml-hi.org{border-color:#fdba74;background:#fff7ed;}
 .fml-hi.grn{border-color:#86efac;background:#f0fdf4;}
 
@@ -475,17 +508,17 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 
 /* 테이블 */
 .fml-tbl{width:100%;border-collapse:collapse;font-size:11px;border-radius:8px;overflow:hidden;}
-.fml-tbl th{background:#0c4da2;color:#fff;padding:7px 10px;text-align:center;font-weight:700;font-size:10px;}
+.fml-tbl th{background:#15803d;color:#fff;padding:7px 10px;text-align:center;font-weight:700;font-size:10px;}
 .fml-tbl td{padding:7px 10px;border-bottom:1px solid #e4e9f0;text-align:center;}
 .fml-tbl tr:last-child td{border-bottom:none;}
 .fml-tbl tr:nth-child(even) td{background:#f8fafc;}
 .fml-tbl td:first-child{font-weight:700;color:#1a2744;text-align:left;padding-left:13px;}
-.fml-tbl td:last-child{font-weight:800;color:#0c4da2;font-size:12px;}
+.fml-tbl td:last-child{font-weight:800;color:#15803d;font-size:12px;}
 
 /* 흐름 표 */
 .fml-flow{width:100%;border-collapse:collapse;font-size:11px;}
 .fml-flow td{padding:8px 12px;border-bottom:1px solid #eef1f6;vertical-align:top;line-height:1.7;}
-.fml-flow td:first-child{font-weight:800;color:#0c4da2;white-space:nowrap;width:26px;text-align:center;}
+.fml-flow td:first-child{font-weight:800;color:#15803d;white-space:nowrap;width:26px;text-align:center;}
 .fml-flow tr:last-child td{border-bottom:none;}
 
 /* ════════════════════════════════════
@@ -494,9 +527,6 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 
 /* ── 태블릿 (641~1024px) ── */
 @media(min-width:641px) and (max-width:1024px){
-  .header-inner{height:60px;}
-  .brand-title{font-size:14px;}
-  .brand-sub{display:none;}
   .two-col{grid-template-columns:1fr;}
   .grid-3{grid-template-columns:1fr 1fr;}
   .three-col{grid-template-columns:1fr 1fr;}
@@ -509,16 +539,8 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 /* ── 모바일 (≤640px) ── */
 @media(max-width:640px){
   /* 헤더 */
-  .header-inner{height:auto;min-height:54px;padding:8px 12px;}
-  .brand-icon{width:34px;height:34px;}
-  .brand-title{font-size:12px;}
-  .brand-sub{display:none;}
-  .btn-print{padding:8px 10px;font-size:0;gap:0;}
-  .btn-print svg{width:18px;height:18px;}
-  .btn-print-text{display:none;}
 
   /* 탭 */
-  .tab-btn{padding:10px 12px;font-size:12px;gap:5px;}
 
   /* 메인 */
   .main-wrap{padding:14px 10px 90px;}
@@ -547,7 +569,6 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
   .law-strip-text{font-size:10px;}
 
   /* FAB */
-  .fml-fab{bottom:16px;right:12px;padding:9px 11px;}
 
   /* 모달 — 하단 시트 */
   .fml-overlay{padding:0;align-items:flex-end;}
@@ -570,7 +591,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 .pwa-install-banner img{width:48px;height:48px;border-radius:12px;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.3);}
 .pwa-banner-text{flex:1;min-width:0;}
 .pwa-banner-title{color:#fff;font-size:13px;font-weight:800;}
-.pwa-banner-desc{color:#93c5fd;font-size:10px;font-weight:600;margin-top:4px;}
+.pwa-banner-desc{color:#86efac;font-size:10px;font-weight:600;margin-top:4px;}
 .pwa-banner-btns{display:flex;gap:8px;flex-shrink:0;}
 .pwa-btn-dismiss{color:rgba(255,255,255,.6);font-size:11px;font-weight:700;padding:8px 12px;border:none;background:transparent;cursor:pointer;border-radius:8px;font-family:inherit;}
 .pwa-btn-install{background:#fff;color:#1d4ed8;font-size:11px;font-weight:900;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);font-family:inherit;}
@@ -579,42 +600,61 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 </style>
 </head>
 <body>
+<!-- ══ FAB (v5.0 §18-11 — 72×72 규격 1개 · 계산식 안내) ══ -->
+<div id="fab-group" class="no-print">
+  <button class="help-fab" onclick="openFormula()" title="계산식 안내" aria-label="계산식 안내 열기">
+    <span class="fab-icon">📐</span>
+    <span class="fab-lbl">계산식</span>
+    <span class="fab-sub">안내</span>
+  </button>
+</div>
 
-<!-- ═══ HEADER ═══ -->
-<header class="app-header no-print">
+<!-- ══ HEADER ══ -->
+<!-- v5.0 : 헤더+탭바 그라데이션 1면 통합 래퍼 (§3-2-1) · 3단 hdr-* (§3-1 · §18-1) · 건축행정 토큰 -->
+<div class="hdr-shell">
+<header class="app-header">
   <div class="header-inner">
     <div class="brand-logo">
-      <div class="brand-icon" style="background:none;padding:0;overflow:hidden;width:42px;height:42px;border-radius:10px;flex-shrink:0;box-shadow:0 2px 10px rgba(37,99,235,.35);"><img src="./icons/brand-icon.jpg" alt="건축상주 MANMIN" style="width:42px;height:42px;object-fit:cover;border-radius:10px;display:block;"/></div>
       <div class="brand-texts">
-        <div class="brand-title">상주감리 산출기 [MANMIN-Ver3.0]</div>
-        <div class="brand-sub">건축법 제25조 · 건축법 시행령 제19조 · 2026년 기준</div>
+        <!-- v5.0-HDR — 375px 1줄 유지(≤40자) -->
+        <div class="hdr-eyebrow">Resident Supervision Fee · 건축법 제25조</div>
+        <h1 class="hdr-h1">건축공사 상주감리 대가 산출기</h1>
+        <div class="hdr-sub">
+          건축법 시행령 제19조 상주감리 · 직접인건비 · 제경비 · 기술료 · 직접경비 · VAT 자동 산출
+          <span class="hdr-manmin">MANMIN · Ver-5.0</span>
+        </div>
       </div>
     </div>
-    <button id="pwa-hdr-btn" onclick="window.pwaTriggerInstall&&window.pwaTriggerInstall()" title="앱 설치">
-      📲 <span class="pwa-hdr-txt">설치</span>
-    </button>
-    <button class="btn-print" onclick="doPrint()" title="산출서 인쇄/PDF">
-      <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-      <span class="btn-print-text">산출서 인쇄 / PDF</span>
-    </button>
-  </div>
-  <div class="tab-bar">
-    <div class="tab-bar-inner">
-      <button class="tab-btn active" data-tab="input" onclick="switchTab('input')">
-        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        입력·산출
-      </button>
-      <button class="tab-btn" data-tab="result" onclick="switchTab('result')">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        산출서 미리보기
-      </button>
-      <button class="tab-btn" data-tab="reference" onclick="switchTab('reference')">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        법적 근거·요율
-      </button>
+    <div class="hdr-right-wrap">
+      <!-- v5.0-HDR — 마스터 4줄(13/11/11/10) · 원본 A4 산출근거 문구에서 발췌 -->
+      <div class="hdr-right"><strong>건축법 제25조 · 시행령 제19조</strong><br/>건축사법 제19조의3 · 대가기준 고시 제2020-635호<br/>건축공사 감리세부기준 고시 제2024-377호<br/><em>[2026 엔지니어링 노임단가 적용]</em></div>
+      <!-- v5.0 : 헤더 버튼 없음. 설치는 PWA 배너가, 인쇄·JPG 는 산출서 탭 출력바가, 계산식 안내는 FAB 이 담당한다(§3-1 · §18-1). -->
     </div>
   </div>
 </header>
+
+<!-- ══ TAB BAR ══ -->
+<!-- .tab-btn 은 switchTab()·doPrint() 가 data-tab 으로 토글하므로 .tb 와 병기한다(계산 구간 무접촉) -->
+<nav class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tb tab-btn active" data-tab="input" onclick="switchTab('input')">📝 입력·산출</button>
+    <button class="tb tab-btn" data-tab="result" onclick="switchTab('result')">📄 산출서 미리보기</button>
+    <button class="tb tab-btn" data-tab="reference" onclick="switchTab('reference')">⚖️ 법적 근거·요율</button>
+  </div>
+</nav>
+</div><!-- /.hdr-shell -->
+<!-- v5.0-HDR : 요약 스트립 (헤더 3층) — 값은 문서 끝 스크립트가 window._s 에서 읽어 채운다 -->
+<div class="sum-bar-wrap no-print">
+  <div class="sum-bar">
+    <span class="sum-item">👷 감리원: <b id="sb-sup">—</b></span>
+    <span class="sum-item">📅 최대 감리기간: <b id="sb-months">—</b></span>
+    <span class="sum-item">💰 직접인건비: <b id="sb-labor">—</b></span>
+    <span class="sum-item">🧾 공급가액: <b id="sb-sub">—</b></span>
+    <span class="sum-item">➕ VAT: <b id="sb-vat">—</b></span>
+    <span class="sum-item">✅ 최종합계: <b id="sb-total">—</b></span>
+  </div>
+</div>
+
 
 <main class="main-wrap">
 
@@ -676,7 +716,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
             <input class="fire-input red-border" type="text" inputmode="numeric" id="directExpenses" value="0" oninput="fmtInput(this);recalc()"/>
           </div>
           <div>
-            <div class="field-label" style="color:#0c4da2;">손해배상보험료 (원)</div>
+            <div class="field-label" style="color:#15803d;">손해배상보험료 (원)</div>
             <input class="fire-input" type="text" inputmode="numeric" id="insuranceFee" value="0" oninput="fmtInput(this);recalc()"/>
           </div>
         </div>
@@ -700,7 +740,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
           <div class="rate-slot">
             <div class="rate-slot-header"><span class="rate-slot-label">제경비율</span><span class="rate-slot-value" id="overheadRateLabel">110<span style="font-size:11px;font-weight:600;color:#64748b;">%</span></span></div>
             <div class="rate-range-badge">110% ~ 120%</div>
-            <input type="range" class="rate-slider" id="overheadRate" min="110" max="120" step="1" value="110" oninput="updateSlider('overheadRate');recalc();" style="background:linear-gradient(to right,#0c4da2 0%,#dde3ed 0%);"/>
+            <input type="range" class="rate-slider" id="overheadRate" min="110" max="120" step="1" value="110" oninput="updateSlider('overheadRate');recalc();" style="background:linear-gradient(to right,#15803d 0%,#dde3ed 0%);"/>
             <div class="rate-minmax"><span>110%</span><span>120%</span></div>
             <div class="rate-sub" id="overheadCalc">직접인건비의 110%</div>
           </div>
@@ -727,7 +767,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
         <div class="period-info">📅 <strong>0.5개월 단위</strong> 입력 &nbsp;|&nbsp; 1개월 = 22인일(man-days) 자동 환산</div>
 
         <div class="worker-slot arch">
-          <div class="worker-tag" style="color:#0c4da2;">🏛 건축 분야 <span class="tag-pill tag-blue">상주감리원 01</span></div>
+          <div class="worker-tag" style="color:#15803d;">🏛 건축 분야 <span class="tag-pill tag-blue">상주감리원 01</span></div>
           <div class="grid-3">
             <div><div class="field-label">기술등급</div><select class="fire-select" id="arch_grade" onchange="recalc()"><option value="professional">기술사/건축사</option><option value="special">특급기술자</option><option value="high" selected>고급기술자</option><option value="middle">중급기술자</option><option value="low">초급기술자</option></select></div>
             <div><div class="field-label">감리기간(개월)</div><div class="flex-row"><input class="fire-input" type="text" inputmode="decimal" id="arch_months" value="6" oninput="recalc()"/><span class="unit-label">월</span></div></div>
@@ -795,13 +835,15 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 <!-- ══════════ RESULT TAB (출력환경 변경 없음) ══════════ -->
 <div id="tab-result" class="tab-panel">
   <!-- 모바일 안내 힌트 -->
-  <div class="a4-mobile-hint no-print">
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="17" r="1"/></svg>
-    A4 전체를 화면 크기에 맞게 자동 축소 표시합니다 · 인쇄 시 실제 A4 크기로 출력됩니다
+  <div class="a4-export-bar no-print">
+    <span class="bar-lbl">📄 A4 출력 :</span>
+    <button class="mm-btn mm-btn-print" onclick="doPrint()">🖨️ 인쇄 / PDF 저장</button>
+    <button class="mm-btn mm-btn-jpg" id="btn-jpg" onclick="exportA4Jpg()">🖼️ JPG 저장</button>
+    <span style="font-size:10px;color:#64748b;margin-left:4px;">※ 인쇄 대화상자에서 "PDF로 저장" 선택 시 PDF 저장 가능</span>
   </div>
-  <div class="result-wrap" id="result-wrap">
-    <div class="a4-scale-wrap" id="a4-scale-wrap">
-    <div class="a4-page" id="print-area">
+  <div class="a4-wrap" id="a4Wrap">
+    <div class="a4-scale-wrap" id="a4ScaleWrap">
+    <div class="a4-page" id="a4Page">
       <div class="a4-top-bar"></div>
       <div class="a4-title"><h2>건축공사 상주감리 대가 산출서</h2></div>
       <table class="a4-tbl a4-info-tbl">
@@ -824,15 +866,15 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
           <tr><td class="a4-item">④ 직접경비</td><td class="a4-desc">실비 정산</td><td class="a4-amt" id="r-directExp">0</td></tr>
           <tr><td class="a4-item">⑤ 손해배상보험료</td><td class="a4-desc">실비 정산</td><td class="a4-amt" id="r-insurance">0</td></tr>
           <tr class="a4-row-nego"><td class="a4-item" style="background:#fff5f5;">⑥ 협의 조정액</td><td class="a4-desc" style="color:#dc2626;">차감</td><td class="a4-amt" id="r-nego">- 0</td></tr>
-          <tr class="a4-row-sub"><td class="a4-item" style="background:#dbeafe;">공급가액 소계</td><td class="a4-desc" style="color:#0c4da2;">①+②+③+④+⑤−⑥</td><td class="a4-amt" id="r-subtotal">0</td></tr>
-          <tr class="a4-row-vat"><td class="a4-item" style="background:#eff6ff;">부가가치세(VAT)</td><td class="a4-desc" id="r-vat-desc" style="color:#1d4ed8;">공급가액의 10%</td><td class="a4-amt" id="r-vat">0</td></tr>
+          <tr class="a4-row-sub"><td class="a4-item" style="background:#dcfce7;">공급가액 소계</td><td class="a4-desc" style="color:#15803d;">①+②+③+④+⑤−⑥</td><td class="a4-amt" id="r-subtotal">0</td></tr>
+          <tr class="a4-row-vat"><td class="a4-item" style="background:#f0fdf4;">부가가치세(VAT)</td><td class="a4-desc" id="r-vat-desc" style="color:#1d4ed8;">공급가액의 10%</td><td class="a4-amt" id="r-vat">0</td></tr>
         </tbody>
         <tfoot><tr class="a4-tfoot-row"><td colspan="2" style="text-align:center;letter-spacing:.1em;">합 계 금 액 (천원 단위 절사)</td><td class="a4-amt" id="r-total">0</td></tr></tfoot>
       </table>
       <table class="a4-tbl" style="margin-bottom:13px;">
         <thead><tr><th style="width:18%;text-align:left;padding-left:13px;">구분</th><th style="width:18%;">기술등급</th><th style="width:14%;">감리기간</th><th style="width:14%;">인일수</th><th style="width:20%;text-align:right;padding-right:13px;">노임단가(원/일)</th><th style="width:16%;text-align:right;padding-right:10px;">소계(원)</th></tr></thead>
         <tbody>
-          <tr><td style="padding-left:13px;font-weight:700;color:#0c4da2;">건축 상주</td><td class="a4-td-c" id="r-arch-grade-name">-</td><td class="a4-td-c" id="r-arch-period">-</td><td class="a4-td-c" id="r-arch-mdays">-</td><td style="text-align:right;padding-right:13px;" id="r-arch-rate">-</td><td style="text-align:right;padding-right:10px;font-weight:700;" id="r-arch-sub">-</td></tr>
+          <tr><td style="padding-left:13px;font-weight:700;color:#15803d;">건축 상주</td><td class="a4-td-c" id="r-arch-grade-name">-</td><td class="a4-td-c" id="r-arch-period">-</td><td class="a4-td-c" id="r-arch-mdays">-</td><td style="text-align:right;padding-right:13px;" id="r-arch-rate">-</td><td style="text-align:right;padding-right:10px;font-weight:700;" id="r-arch-sub">-</td></tr>
           <tr><td style="padding-left:13px;font-weight:700;color:#0891b2;">기계 상주</td><td class="a4-td-c" id="r-mech-grade-name">-</td><td class="a4-td-c" id="r-mech-period">-</td><td class="a4-td-c" id="r-mech-mdays">-</td><td style="text-align:right;padding-right:13px;" id="r-mech-rate">-</td><td style="text-align:right;padding-right:10px;font-weight:700;" id="r-mech-sub">-</td></tr>
           <tr><td style="padding-left:13px;font-weight:700;color:#7c3aed;">토목 상주</td><td class="a4-td-c" id="r-civil-grade-name">-</td><td class="a4-td-c" id="r-civil-period">-</td><td class="a4-td-c" id="r-civil-mdays">-</td><td style="text-align:right;padding-right:13px;" id="r-civil-rate">-</td><td style="text-align:right;padding-right:10px;font-weight:700;" id="r-civil-sub">-</td></tr>
           <tr><td style="padding-left:13px;font-weight:700;color:#64748b;">비상주</td><td class="a4-td-c" id="r-nr-grade-name">-</td><td class="a4-td-c" id="r-nr-period">-</td><td class="a4-td-c" id="r-nr-mdays">-</td><td style="text-align:right;padding-right:13px;" id="r-nr-rate">-</td><td style="text-align:right;padding-right:10px;font-weight:700;" id="r-nr-sub">-</td></tr>
@@ -847,7 +889,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
         </div>
         <div class="a4-sign-supervisor"><span class="hint">공사감리자</span><span class="name" id="r-sign-name">○○건축사사무소</span><span class="hint">(인)</span></div>
       </div>
-      <div class="a4-footer"><div class="a4-bot-bar"></div><div class="a4-footer-ver">상주감리 산출기 [MANMIN-Ver3.0] · 건축법 제25조 · 2026년 기준</div></div>
+      <div class="a4-footer"><div class="a4-bot-bar"></div><div class="a4-footer-ver">건축공사 상주감리 대가 산출기 [MANMIN-Ver5.0] · 건축법 제25조 · 2026년 기준</div></div>
     </div>
     </div><!-- /a4-scale-wrap -->
   </div>
@@ -881,8 +923,8 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
       <div class="ref-block">
         <div class="ref-block-header"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>상주감리 대상 건축물</div>
         <div class="ref-block-body">
-          <div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #eef1f6;align-items:flex-start;"><span style="background:#0c4da2;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;">규모</span><span style="font-size:11px;color:#4a5568;line-height:1.6;">바닥면적 합계 <strong>5,000㎡↑</strong> (축사·재배사 제외)</span></div>
-          <div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #eef1f6;align-items:flex-start;"><span style="background:#0c4da2;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;">층수</span><span style="font-size:11px;color:#4a5568;line-height:1.6;">연속 <strong>5개 층↑</strong> + 바닥면적 <strong>3,000㎡↑</strong></span></div>
+          <div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #eef1f6;align-items:flex-start;"><span style="background:#15803d;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;">규모</span><span style="font-size:11px;color:#4a5568;line-height:1.6;">바닥면적 합계 <strong>5,000㎡↑</strong> (축사·재배사 제외)</span></div>
+          <div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #eef1f6;align-items:flex-start;"><span style="background:#15803d;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;">층수</span><span style="font-size:11px;color:#4a5568;line-height:1.6;">연속 <strong>5개 층↑</strong> + 바닥면적 <strong>3,000㎡↑</strong></span></div>
           <div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #eef1f6;align-items:flex-start;"><span style="background:#e63312;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;">주거</span><span style="font-size:11px;color:#4a5568;line-height:1.6;"><strong>아파트</strong> 건축공사 전체</span></div>
           <div style="display:flex;gap:8px;padding:7px 0;align-items:flex-start;"><span style="background:#7c3aed;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;">특수</span><span style="font-size:11px;color:#4a5568;line-height:1.6;">준다중이용 건축물 <strong>1,000㎡↑</strong></span></div>
         </div>
@@ -890,8 +932,8 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
       <div class="ref-block">
         <div class="ref-block-header"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg>행정 절차 체크리스트</div>
         <div class="ref-block-body">
-          <div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #eef1f6;align-items:flex-start;"><span style="background:#0c4da2;color:#fff;font-size:9px;font-weight:800;width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</span><span style="font-size:11px;color:#4a5568;line-height:1.6;">지정 후 7일 이내·착공 시 건축물생애이력관리시스템에 감리원 배치 통보·신고 (건축사법 제18조)</span></div>
-          <div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #eef1f6;align-items:flex-start;"><span style="background:#0c4da2;color:#fff;font-size:9px;font-weight:800;width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</span><span style="font-size:11px;color:#4a5568;line-height:1.6;">감리비 계약서상 시기에 맞춰 분할 지급 (건축법 제25조 제11항)</span></div>
+          <div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #eef1f6;align-items:flex-start;"><span style="background:#15803d;color:#fff;font-size:9px;font-weight:800;width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</span><span style="font-size:11px;color:#4a5568;line-height:1.6;">지정 후 7일 이내·착공 시 건축물생애이력관리시스템에 감리원 배치 통보·신고 (건축사법 제18조)</span></div>
+          <div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #eef1f6;align-items:flex-start;"><span style="background:#15803d;color:#fff;font-size:9px;font-weight:800;width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</span><span style="font-size:11px;color:#4a5568;line-height:1.6;">감리비 계약서상 시기에 맞춰 분할 지급 (건축법 제25조 제11항)</span></div>
           <div style="display:flex;gap:8px;padding:7px 0;align-items:flex-start;"><span style="background:#e63312;color:#fff;font-size:9px;font-weight:800;width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">!</span><span style="font-size:11px;color:#4a5568;line-height:1.6;"><strong>감리일지 매일 작성 의무</strong> — 상주 여부 법적 증명 핵심 서류</span></div>
         </div>
       </div>
@@ -901,13 +943,6 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 
 </main>
 
-<!-- ═══ 계산식 안내 FAB ═══ -->
-<button class="fml-fab no-print" onclick="openFormula()" aria-label="계산식 안내 열기">
-  <span style="font-size:20px;line-height:1;">📐</span>
-  <span style="font-size:10px;font-weight:800;letter-spacing:.04em;">계산식</span>
-  <span style="font-size:9px;opacity:.75;">안내</span>
-</button>
-
 <!-- ═══ 계산식 안내 모달 ═══ -->
 <div id="fml-overlay" class="fml-overlay hidden" onclick="handleOverlayClick(event)">
   <div class="fml-box" onclick="event.stopPropagation()">
@@ -916,7 +951,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
       <div class="fml-hd-row">
         <div>
           <div style="font-size:14px;font-weight:900;letter-spacing:.04em;margin-bottom:3px;">📐 계산식 안내</div>
-          <div style="font-size:10px;opacity:.65;font-weight:500;">상주감리 대가 · 실비정액가산방식 · 2026년 기준</div>
+          <div style="font-size:10px;opacity:.65;font-weight:500;">상주감리 대가 · 실비정액가산방식 · 2026년 기준 · MANMIN Ver-5.0</div>
         </div>
         <button class="fml-close-btn" onclick="closeFormula()" aria-label="닫기">✕</button>
       </div>
@@ -935,7 +970,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
       <div class="fml-panel on" id="fml-phowto">
 
         <!-- 상단 타이틀 배너 -->
-        <div style="background:linear-gradient(135deg,#081e44,#0c4da2);border-radius:13px;padding:16px 18px;margin-bottom:16px;">
+        <div style="background:linear-gradient(135deg,#052e16,#15803d);border-radius:13px;padding:16px 18px;margin-bottom:16px;">
           <div style="font-size:13px;font-weight:900;color:#fbbf24;margin-bottom:4px;display:flex;align-items:center;gap:8px;">
             <span style="font-size:20px;">🏛️</span> 상주감리 산출기 이용방법
           </div>
@@ -943,10 +978,10 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
         </div>
 
         <!-- STEP 1 -->
-        <div style="display:flex;gap:11px;align-items:flex-start;background:#f8fafc;border:1.5px solid #e4e9f0;border-left:4px solid #0c4da2;border-radius:10px;padding:13px 14px;margin-bottom:9px;">
-          <div style="min-width:30px;height:30px;background:linear-gradient(135deg,#0c4da2,#0a3270);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(12,77,162,.35);">1</div>
+        <div style="display:flex;gap:11px;align-items:flex-start;background:#f8fafc;border:1.5px solid #e4e9f0;border-left:4px solid #15803d;border-radius:10px;padding:13px 14px;margin-bottom:9px;">
+          <div style="min-width:30px;height:30px;background:linear-gradient(135deg,#15803d,#14532d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(21,128,61,.35);">1</div>
           <div style="flex:1;min-width:0;">
-            <div style="font-size:12px;font-weight:900;color:#0c4da2;margin-bottom:5px;">📋 감리원 정보 입력 탭</div>
+            <div style="font-size:12px;font-weight:900;color:#15803d;margin-bottom:5px;">📋 감리원 정보 입력 탭</div>
             <div style="font-size:10.5px;color:#374151;line-height:1.85;">
               ① 상단 <strong>「📋 감리원 정보」 탭</strong>을 선택합니다.<br>
               ② <strong>건축·기계·토목 상주감리원</strong> 각각의 <strong>기술등급</strong>(기술사/특급/고급/중급/초급)과 <strong>감리기간(개월)</strong>을 입력합니다.<br>
@@ -997,7 +1032,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
         </div>
 
         <!-- STEP 5 -->
-        <div style="display:flex;gap:11px;align-items:flex-start;background:#eff6ff;border:1.5px solid #bfdbfe;border-left:4px solid #2563eb;border-radius:10px;padding:13px 14px;margin-bottom:16px;">
+        <div style="display:flex;gap:11px;align-items:flex-start;background:#f0fdf4;border:1.5px solid #bbf7d0;border-left:4px solid #2563eb;border-radius:10px;padding:13px 14px;margin-bottom:16px;">
           <div style="min-width:30px;height:30px;background:linear-gradient(135deg,#2563eb,#1d4ed8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(37,99,235,.35);">5</div>
           <div style="flex:1;min-width:0;">
             <div style="font-size:12px;font-weight:900;color:#1d4ed8;margin-bottom:5px;">🖨️ 출력 및 저장</div>
@@ -1010,10 +1045,10 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
         </div>
 
         <!-- 주요 기능 요약 -->
-        <div class="fml-sec-ttl" style="color:#0c4da2;">💡 주요 기능 요약</div>
+        <div class="fml-sec-ttl" style="color:#15803d;">💡 주요 기능 요약</div>
         <div class="fml-g2">
-          <div class="fml-card" style="border-left:3px solid #0c4da2;">
-            <div class="fml-card-ttl" style="color:#0c4da2;">📐 계산식 안내 버튼</div>
+          <div class="fml-card" style="border-left:3px solid #15803d;">
+            <div class="fml-card-ttl" style="color:#15803d;">📐 계산식 안내 버튼</div>
             <div class="fml-note">오른쪽 하단 플로팅 버튼(FAB)을 클릭하면 이 창이 열립니다. 탭을 전환하여 직접인건비·제경비·기술료·VAT 계산식과 2026년 노임단가를 확인하세요.</div>
           </div>
           <div class="fml-card" style="border-left:3px solid #f97316;">
@@ -1032,7 +1067,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 
         <!-- 법적 근거 -->
         <div class="fml-hi" style="margin-top:4px;">
-          <div class="fml-card-ttl" style="color:#0c4da2;">📌 주요 법적 근거</div>
+          <div class="fml-card-ttl" style="color:#15803d;">📌 주요 법적 근거</div>
           <div class="fml-note" style="font-size:10.5px;line-height:2.0;">
             <strong>건축법 제25조</strong> — 건축물의 공사감리 · 26.02.27 최신 시행<br>
             <strong>건축법 시행령 제19조 제5항</strong> — 상주감리 연속 배치 기준 · 26.01.02 시행<br>
@@ -1045,9 +1080,9 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 
       <!-- 패널 0: 직접인건비 -->
       <div class="fml-panel" id="fml-p0">
-        <div class="fml-sec-ttl" style="color:#0c4da2;">직접인건비 핵심 공식</div>
+        <div class="fml-sec-ttl" style="color:#15803d;">직접인건비 핵심 공식</div>
         <div class="fml-hi">
-          <div class="fml-card-ttl" style="color:#0c4da2;">기본 공식 (실비정액가산방식)</div>
+          <div class="fml-card-ttl" style="color:#15803d;">기본 공식 (실비정액가산방식)</div>
           <code class="fml-eq hi">직접인건비 = Σ (기술등급별 노임단가 × 인일수)</code>
           <div class="fml-note">각 기술자의 1일 노임단가에 실제 투입 인일수를 곱하여 합산합니다.<br/>※ 상주감리원 3인(건축·기계·토목) + 비상주감리원 1인 전원 합산</div>
         </div>
@@ -1060,9 +1095,9 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
             기준: 시공사 제출 착공신고서 상 '공사예정공정표(준공예정일 포함)' 기준 산출
           </div>
         </div>
-        <div class="fml-sec-ttl" style="color:#0c4da2;">인력별 산출 구조</div>
+        <div class="fml-sec-ttl" style="color:#15803d;">인력별 산출 구조</div>
         <div class="fml-g2">
-          <div class="fml-card"><div class="fml-card-ttl" style="color:#0c4da2;">🏛 건축 상주감리원 (L₁)</div><code class="fml-eq">L₁ = 단가₁ × (개월₁ × 22)</code><div class="fml-note">분야: 건축 · 기술등급 선택</div></div>
+          <div class="fml-card"><div class="fml-card-ttl" style="color:#15803d;">🏛 건축 상주감리원 (L₁)</div><code class="fml-eq">L₁ = 단가₁ × (개월₁ × 22)</code><div class="fml-note">분야: 건축 · 기술등급 선택</div></div>
           <div class="fml-card"><div class="fml-card-ttl" style="color:#0891b2;">⚙️ 기계 상주감리원 (L₂)</div><code class="fml-eq" style="background:#ecfeff;color:#0e7490;">L₂ = 단가₂ × (개월₂ × 22)</code><div class="fml-note">분야: 기계 · 기술등급 선택</div></div>
           <div class="fml-card"><div class="fml-card-ttl" style="color:#7c3aed;">🏗 토목 상주감리원 (L₃)</div><code class="fml-eq" style="background:#f5f3ff;color:#6d28d9;">L₃ = 단가₃ × (개월₃ × 22)</code><div class="fml-note">분야: 토목 · 기술등급 선택</div></div>
           <div class="fml-card"><div class="fml-card-ttl" style="color:#64748b;">📋 비상주 감리원 (L₄)</div><code class="fml-eq" style="background:#f1f5f9;color:#334155;">L₄ = 단가₄ × 투입일수</code><div class="fml-note">미투입 선택 시 L₄ = 0</div></div>
@@ -1071,16 +1106,16 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
         <div class="fml-sec-ttl" style="color:#e63312;">⚠ 상주감리 M/M 유의사항</div>
         <div class="fml-card" style="border-left:3px solid #e63312;font-size:11px;color:#4a5568;line-height:2.0;">
           <b style="color:#e63312;">건축사법 제19조의3</b> — 민간 건축물도 대가기준 준용 의무화 (26.02.12 국회 통과·공포 1년 후 시행)<br/>
-          <b style="color:#0c4da2;">건축법 시행령 제19조 제5항</b> — 상주기간 = 착공~준공 전 기간 동안 연속 배치<br/>
+          <b style="color:#15803d;">건축법 시행령 제19조 제5항</b> — 상주기간 = 착공~준공 전 기간 동안 연속 배치<br/>
           0.5개월 단위 입력 시 소수점 계산 자동 적용 (예: 6.5개월 = 143인일)
         </div>
       </div>
 
       <!-- 패널 1: 제경비·기술료 -->
       <div class="fml-panel" id="fml-p1">
-        <div class="fml-sec-ttl" style="color:#0c4da2;">② 제경비 (대가기준 제18조)</div>
+        <div class="fml-sec-ttl" style="color:#15803d;">② 제경비 (대가기준 제18조)</div>
         <div class="fml-hi">
-          <div class="fml-card-ttl" style="color:#0c4da2;">제경비 공식</div>
+          <div class="fml-card-ttl" style="color:#15803d;">제경비 공식</div>
           <code class="fml-eq hi">제경비 = 직접인건비 × 제경비율 (110% ~ 120%)</code>
           <div class="fml-note">감리 법인의 간접 운영비 (행정직원 급여, 사무공간 임대료 등)<br/>법정 범위: <strong>110% ~ 120%</strong> · 슬라이더로 조정 가능</div>
         </div>
@@ -1107,9 +1142,9 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
 
       <!-- 패널 2: 합계·VAT·총액 -->
       <div class="fml-panel" id="fml-p2">
-        <div class="fml-sec-ttl" style="color:#0c4da2;">공급가액 구조</div>
+        <div class="fml-sec-ttl" style="color:#15803d;">공급가액 구조</div>
         <div class="fml-hi">
-          <div class="fml-card-ttl" style="color:#0c4da2;">공급가액 (VAT 제외 합계)</div>
+          <div class="fml-card-ttl" style="color:#15803d;">공급가액 (VAT 제외 합계)</div>
           <code class="fml-eq hi">공급가액 = ①직접인건비 + ②제경비 + ③기술료<br/>          + ④직접경비 + ⑤손해배상보험료 − ⑥협의액</code>
           <div class="fml-note">협의액: 계약 협의에 의해 감액 조정 (NEGO)</div>
         </div>
@@ -1119,41 +1154,41 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
           <code class="fml-eq grn">부가가치세 = 공급가액 × 10%</code>
           <div class="fml-note" style="color:#166534;"><strong>공급가액 = ①+②+③+④+⑤−⑥ (손해배상보험료 포함)</strong><br/>손해배상보험료 제외 후 VAT 계산 → 과소 산출 오류 주의!</div>
         </div>
-        <div class="fml-sec-ttl" style="color:#0c4da2;margin-top:18px;">최종 합계 (천원 단위 절사)</div>
+        <div class="fml-sec-ttl" style="color:#15803d;margin-top:18px;">최종 합계 (천원 단위 절사)</div>
         <div class="fml-hi">
-          <div class="fml-card-ttl" style="color:#0c4da2;">총액 계산</div>
+          <div class="fml-card-ttl" style="color:#15803d;">총액 계산</div>
           <code class="fml-eq hi">총액 = ⌊(공급가액 + 부가가치세) ÷ 1,000⌋ × 1,000</code>
           <div class="fml-note">천원 단위 미만은 버림(floor) 처리</div>
         </div>
         <div class="fml-sec-ttl" style="color:#64748b;margin-top:18px;">전체 산출 흐름 요약</div>
         <div class="fml-card" style="padding:0;overflow:hidden;">
           <table class="fml-flow">
-            <tr><td style="color:#0c4da2;">①</td><td><strong>직접인건비</strong> = L건축 + L기계 + L토목 + L비상주 &nbsp;(노임단가 × 인일수 합산)</td></tr>
-            <tr><td style="color:#0c4da2;">②</td><td><strong>제경비</strong> = ① × 110~120%</td></tr>
+            <tr><td style="color:#15803d;">①</td><td><strong>직접인건비</strong> = L건축 + L기계 + L토목 + L비상주 &nbsp;(노임단가 × 인일수 합산)</td></tr>
+            <tr><td style="color:#15803d;">②</td><td><strong>제경비</strong> = ① × 110~120%</td></tr>
             <tr><td style="color:#c2410c;">③</td><td><strong>기술료</strong> = (①+②) × 20~40%</td></tr>
             <tr><td style="color:#64748b;">④</td><td><strong>직접경비</strong> = 실비</td></tr>
             <tr><td style="color:#64748b;">⑤</td><td><strong>손해배상보험료</strong> = 실비</td></tr>
             <tr><td style="color:#dc2626;">⑥</td><td><strong>협의 조정액</strong> = − NEGO</td></tr>
-            <tr style="background:#eff6ff;"><td style="color:#0c4da2;font-weight:900;">계</td><td><strong style="color:#0c4da2;">공급가액 = ①+②+③+④+⑤−⑥</strong></td></tr>
+            <tr style="background:#f0fdf4;"><td style="color:#15803d;font-weight:900;">계</td><td><strong style="color:#15803d;">공급가액 = ①+②+③+④+⑤−⑥</strong></td></tr>
             <tr style="background:#fef2f2;"><td style="color:#dc2626;font-weight:900;">V</td><td><strong style="color:#dc2626;">부가가치세 = 공급가액 × 10%</strong></td></tr>
-            <tr style="background:#0c4da2;"><td style="color:#fff;font-weight:900;border:none;">총</td><td style="color:#fff;font-weight:900;border:none;">총액 = ⌊(공급가액 + VAT) ÷ 1,000⌋ × 1,000</td></tr>
+            <tr style="background:#15803d;"><td style="color:#fff;font-weight:900;border:none;">총</td><td style="color:#fff;font-weight:900;border:none;">총액 = ⌊(공급가액 + VAT) ÷ 1,000⌋ × 1,000</td></tr>
           </table>
         </div>
       </div>
 
       <!-- 패널 3: 노임단가 참고 -->
       <div class="fml-panel" id="fml-p3">
-        <div class="fml-sec-ttl" style="color:#0c4da2;">2026년 기준 노임단가 (원/인일)</div>
+        <div class="fml-sec-ttl" style="color:#15803d;">2026년 기준 노임단가 (원/인일)</div>
         <div class="fml-card" style="padding:0;overflow:hidden;">
           <div style="overflow-x:auto;">
             <table class="fml-tbl">
               <thead><tr><th style="text-align:left;padding-left:13px;">기술자 등급</th><th>직종</th><th>노임단가(원/일)</th><th>1개월(22일)</th></tr></thead>
               <tbody>
-                <tr><td>기술사 / 건축사</td><td style="color:#93c5fd;">Professional</td><td>467,217</td><td style="color:#0c4da2;">10,278,774</td></tr>
-                <tr><td>특급기술자</td><td style="color:#93c5fd;">Special</td><td>373,353</td><td style="color:#0c4da2;">8,213,766</td></tr>
-                <tr><td>고급기술자</td><td>High</td><td>310,884</td><td style="color:#0c4da2;">6,839,448</td></tr>
-                <tr><td>중급기술자</td><td>Middle</td><td>295,138</td><td style="color:#0c4da2;">6,493,036</td></tr>
-                <tr><td>초급기술자</td><td>Low</td><td>235,459</td><td style="color:#0c4da2;">5,180,098</td></tr>
+                <tr><td>기술사 / 건축사</td><td style="color:#86efac;">Professional</td><td>467,217</td><td style="color:#15803d;">10,278,774</td></tr>
+                <tr><td>특급기술자</td><td style="color:#86efac;">Special</td><td>373,353</td><td style="color:#15803d;">8,213,766</td></tr>
+                <tr><td>고급기술자</td><td>High</td><td>310,884</td><td style="color:#15803d;">6,839,448</td></tr>
+                <tr><td>중급기술자</td><td>Middle</td><td>295,138</td><td style="color:#15803d;">6,493,036</td></tr>
+                <tr><td>초급기술자</td><td>Low</td><td>235,459</td><td style="color:#15803d;">5,180,098</td></tr>
               </tbody>
             </table>
           </div>
@@ -1164,7 +1199,7 @@ body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#1a2744;min-he
           <div class="fml-card"><div class="fml-card-ttl">제경비율</div><code class="fml-eq">110% ~ 120%</code><div class="fml-note">직접인건비 기준 | 대가기준 제18조</div></div>
           <div class="fml-card"><div class="fml-card-ttl">기술료율</div><code class="fml-eq hi">20% ~ 40%</code><div class="fml-note">(인건비+제경비) 기준 | 대가기준 제19조</div></div>
         </div>
-        <div class="fml-sec-ttl" style="color:#0c4da2;margin-top:18px;">📋 적용 법령</div>
+        <div class="fml-sec-ttl" style="color:#15803d;margin-top:18px;">📋 적용 법령</div>
         <div class="fml-card" style="font-size:11px;color:#4a5568;line-height:2.2;">
           ① 건축법 제25조(건축물의 공사감리) · 26.02.27 최신 시행<br/>
           ② 건축법 시행령 제19조 제5항(상주감리 배치) · 26.01.02 시행<br/>
@@ -1325,31 +1360,21 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeFormula
    scale = availableWidth / 794
 */
 function scaleA4(){
-  var wrap = document.getElementById('result-wrap');
-  var scaleEl = document.getElementById('a4-scale-wrap');
-  if(!wrap || !scaleEl) return;
-
-  var A4W = 794;   // px (210mm @ 96dpi)
-  var A4H = 1123;  // px (297mm @ 96dpi)
-  var H_PADDING = 48; // result-wrap 상하 패딩(24px×2)
-
-  /* 가용 폭: 뷰포트 전체 (양쪽 여백 16px 고려) */
-  var available = Math.min(wrap.clientWidth, window.innerWidth) - 24;
-
-  if(available >= A4W){
-    /* 데스크톱: 원본 크기 */
-    scaleEl.style.transform = '';
-    scaleEl.style.width = A4W + 'px';
-    wrap.style.minHeight = (A4H + H_PADDING) + 'px';
-  } else {
-    /* 모바일·태블릿: 화면 폭에 맞게 축소 */
-    var scale = available / A4W;
-    scaleEl.style.transform = 'scale(' + scale + ')';
-    scaleEl.style.width = A4W + 'px';
-    /* transform은 레이아웃 공간을 차지하지 않으므로 부모 높이 보정 */
-    wrap.style.minHeight = Math.round(A4H * scale + H_PADDING) + 'px';
-  }
+  /* v5.0 §17-2 · §17-4 : .a4-page 794px 고정, 래퍼에 transform:scale() 만. width 인라인 금지(§17-3) · 음수 배율 방지 */
+  var wrap = document.getElementById('a4ScaleWrap');
+  var outer = document.getElementById('a4Wrap');
+  if(!wrap || !outer) return;
+  if(window.matchMedia('print').matches){ wrap.style.transform='none'; wrap.style.height=''; return; }
+  var ocs = getComputedStyle(outer);
+  var availW = outer.clientWidth - (parseFloat(ocs.paddingLeft)||0) - (parseFloat(ocs.paddingRight)||0);
+  if(availW <= 0){ wrap.style.transform='none'; wrap.style.height=''; return; }
+  var scale = Math.max(0.05, Math.min(1, availW / 794));
+  wrap.style.transform = 'scale(' + scale.toFixed(5) + ')';
+  var page = document.getElementById('a4Page');
+  var naturalH = page ? page.offsetHeight : 1123;
+  wrap.style.height = (naturalH * scale) + 'px';
 }
+window._scaleA4 = scaleA4;
 
 /* 초기화 & 리사이즈 */
 window.addEventListener('resize', scaleA4);
@@ -1510,6 +1535,237 @@ setTimeout(scaleA4, 100);
     if(banner) banner.style.display = 'none';
     deferred = null;
   });
+})();
+</script>
+<script>
+/* ═══════════════ v5.0 — A4 페이지 단위 JPG + 저장 시트 (§3-5 · §14-2 · §17-7) ═══════════════
+   22 냉온배관 v5.0 엔진 이식. 통짜 1장 캡처 → A4 비율(794×1123) 쪽 분할 + 미리보기 시트. */
+function mmSafeCuts(page){
+  var pr=page.getBoundingClientRect(), out=[];
+  page.querySelectorAll('.a4-head2,table.a4-tbl tbody tr,table.a4-meta-table tr')
+    .forEach(function(el){ out.push(el.getBoundingClientRect().bottom-pr.top); });
+  page.querySelectorAll('.a4-sub')
+    .forEach(function(el){ out.push(el.getBoundingClientRect().top-pr.top); });
+  out.push(page.scrollHeight);
+  out.sort(function(a,b){return a-b;});
+  return out.filter(function(v,i,a){return i===0 || v-a[i-1]>0.5;});
+}
+function mmPickCut(cuts,y,limit){
+  var best=0;
+  for(var i=0;i<cuts.length;i++){
+    if(cuts[i]>y+1 && cuts[i]<=limit) best=cuts[i];
+    else if(cuts[i]>limit) break;
+  }
+  return best;
+}
+/* ⛔ .a4-page 에 min-height:1122px 이 걸려 있어 scrollHeight 를 그대로 쓰면 유령 여백이 문서 높이로 잡힌다(§14-2). */
+function mmContentHeight(page){
+  var pr=page.getBoundingClientRect(), max=0;
+  page.querySelectorAll('*').forEach(function(el){
+    var cs=getComputedStyle(el);
+    if(cs.display==='none' || cs.visibility==='hidden') return;
+    var b=el.getBoundingClientRect().bottom-pr.top;
+    if(b>max) max=b;
+  });
+  var pad=parseFloat(getComputedStyle(page).paddingBottom)||0;
+  var h=Math.ceil(max+pad);
+  return (h>0 && h<page.scrollHeight) ? h : page.scrollHeight;
+}
+/* 쪽 나눔은 @page 여백과 같은 값을 쓴다(§3-5-1). 세로 유효 높이 297-14-22 = 261mm. */
+var MM_PAGE = { W:794, H:1123, MT:14, MR:12, MB:22, ML:14 };
+/* 한 장에 못 들어가는 표에는 .long 을 붙여 분할을 허용한다(§16-13). */
+function markLongTables(page){
+  var mmPerPx=210/794, usable=(297-14-22)/mmPerPx;   /* 261mm ≈ 987px */
+  page.querySelectorAll('table.a4-tbl,table.a4-meta-table').forEach(function(t){
+    t.classList.toggle('long', t.getBoundingClientRect().height > usable);
+  });
+}
+/* 블록 원자 방식(§17-7) — #a4Page 직계 자식. 소제목(.a4-sub)은 바로 뒤 형제와 한 덩어리. */
+function mmBlocks(page){
+  var pr=page.getBoundingClientRect(), out=[], pend=null;
+  Array.prototype.forEach.call(page.children, function(el){
+    var b=el.getBoundingClientRect();
+    if(b.height<=0) return;
+    var mb=parseFloat(getComputedStyle(el).marginBottom)||0;
+    var top=b.top-pr.top, bot=b.bottom-pr.top+mb;
+    if(el.classList.contains('a4-sub')){
+      if(pend) out.push(pend);
+      pend={top:top, bot:bot};
+      return;
+    }
+    if(pend){ out.push({top:pend.top, bot:bot}); pend=null; return; }
+    out.push({top:top, bot:bot});
+  });
+  if(pend) out.push(pend);
+  out.sort(function(a,b){ return a.top-b.top; });
+  return out;
+}
+function mmSegments(page){
+  var mmPerPx=210/MM_PAGE.W;
+  var cs=getComputedStyle(page);
+  var padTop=parseFloat(cs.paddingTop)||0, padBot=parseFloat(cs.paddingBottom)||0;
+  var usable=(297-MM_PAGE.MT-MM_PAGE.MB)/mmPerPx;
+  var docH=mmContentHeight(page);
+  var stop=Math.max(padTop, docH-padBot);
+  var blocks=mmBlocks(page);
+  if(!blocks.length) return [[padTop,stop]];
+  var cuts=mmSafeCuts(page);
+  var segs=[], y=padTop, i=0, guard=0;
+  while(i<blocks.length && guard++<120){
+    var limit=y+usable, j=i, end=y;
+    while(j<blocks.length && blocks[j].bot<=limit+0.5){ end=blocks[j].bot; j++; }
+    if(j===i){
+      var cut=mmPickCut(cuts, y, limit);
+      if(!cut || cut<=y+1) cut=limit;
+      segs.push([y,cut]);
+      if(cut>=blocks[i].bot-0.5) i++;
+      y=cut; continue;
+    }
+    segs.push([y,end]); y=end; i=j;
+  }
+  if(stop-y>5) segs.push([y,stop]);
+  return segs.length ? segs : [[padTop,stop]];
+}
+function mmDownload(url,name){
+  var a=document.createElement('a');
+  a.download=name; a.href=url;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+function mmCloseSheet(){
+  var ov=document.getElementById('mm-save-ov');
+  if(ov) ov.classList.remove('show');
+}
+function mmOpenSheet(shots, base){
+  var prev=document.getElementById('mm-save-ov');
+  if(prev) prev.remove();
+  var ov=document.createElement('div');
+  ov.id='mm-save-ov';
+  var body='';
+  shots.forEach(function(url,i){
+    body+='<div class="mm-shot"><img src="'+url+'" alt="'+(i+1)+'쪽 미리보기"/>'
+        + '<button class="mm-shot-btn" data-i="'+i+'">🖼 '+(i+1)+'쪽 저장</button></div>';
+  });
+  ov.innerHTML =
+    '<div class="mm-sheet" role="dialog" aria-modal="true" aria-label="산출서 저장">'
+    + '<div class="mm-sheet-head"><div>'
+    +   '<div class="mm-sheet-title">산출서 저장 · 총 '+shots.length+'매</div>'
+    +   '<div class="mm-sheet-note">'+(shots.length>1?'브라우저가 연속 다운로드를 차단하므로 쪽별로 저장합니다.':'미리보기를 확인하고 저장하세요.')+'</div>'
+    + '</div><button class="btn-export mm-btn-close" id="mm-sheet-x">✕ 닫기</button></div>'
+    + '<div class="mm-sheet-body'+(shots.length>1?' multi':'')+'">'+body+'</div>'
+    + '<div class="mm-sheet-foot">'
+    +   '<button class="btn-export mm-btn-jpg" id="mm-save-all">🖼 전체 저장 ('+shots.length+'매)</button>'
+    + '</div></div>';
+  document.body.appendChild(ov);
+  ov.classList.add('show');
+  ov.querySelectorAll('.mm-shot-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      mmDownload(shots[+b.getAttribute('data-i')], base+'_'+(+b.getAttribute('data-i')+1)+'of'+shots.length+'.jpg');
+    });
+  });
+  document.getElementById('mm-sheet-x').addEventListener('click',mmCloseSheet);
+  ov.addEventListener('click',function(e){ if(e.target===ov) mmCloseSheet(); });
+  document.getElementById('mm-save-all').addEventListener('click',function(){
+    shots.forEach(function(url,i){
+      setTimeout(function(){ mmDownload(url, base+'_'+(i+1)+'of'+shots.length+'.jpg'); }, i*400);
+    });
+  });
+}
+
+window.exportA4Jpg = function(){
+  var el = document.getElementById('a4Page');
+  if(!el){ mmToast('산출서 미리보기 탭으로 이동 후 시도하세요'); return; }
+  if(!(window._s && window._s.labor!==undefined)){ mmToast('⚠️ 먼저 산출 입력을 완료하세요'); return; }
+  renderResult();
+  mmToast('📸 JPG 생성 중...');
+  /* ⛔ 미리보기 축소 배율을 반드시 먼저 푼다(§16-17). 해제 → 리플로우 → 측정·캡처 → 복원 */
+  var scaleWrap = document.getElementById('a4ScaleWrap');
+  var prevTransform = scaleWrap ? scaleWrap.style.transform : '';
+  if(scaleWrap) scaleWrap.style.transform = 'none';
+  void el.offsetHeight;
+  var restoreScale = function(){ if(scaleWrap) scaleWrap.style.transform = prevTransform; };
+  markLongTables(el);
+  var segs = mmSegments(el);
+  var fullH = Math.max(mmContentHeight(el),1);
+  html2canvas(el, {
+    scale: 2, useCORS: true, allowTaint: false,
+    backgroundColor: '#ffffff', logging: false,
+    width: el.scrollWidth, height: fullH,
+    windowWidth: el.scrollWidth, windowHeight: fullH,
+    scrollX: 0, scrollY: 0
+  }).then(function(canvas){
+    restoreScale();
+    var now = new Date();
+    var ts = now.getFullYear()+''+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')
+      +'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0');
+    var base = '상주감리_대가산출서_MANMIN-Ver5.0_'+ts;
+    if(!segs || !segs.length){
+      mmDownload(canvas.toDataURL('image/jpeg',0.95), base+'.jpg');
+      mmToast('✅ JPG 저장 완료!'); return;
+    }
+    /* 각 쪽을 A4 용지 비율(794×1123 · 1:1.414) 캔버스에 얹는다(§3-5-2). 윗여백 14mm 전 쪽 동일(§3-5-1). */
+    var S = canvas.width/el.scrollWidth;
+    var PAGE_W=MM_PAGE.W, PAGE_H=MM_PAGE.H, mmPerPx=210/PAGE_W;
+    var topPx = MM_PAGE.MT/mmPerPx;
+    var shots = segs.map(function(sg, idx){
+      var h=Math.max(1,Math.round((sg[1]-sg[0])*S));
+      var tmp=document.createElement('canvas');
+      tmp.width=Math.round(PAGE_W*S); tmp.height=Math.round(PAGE_H*S);
+      var ctx=tmp.getContext('2d');
+      ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,tmp.width,tmp.height);
+      ctx.drawImage(canvas,0,Math.round(sg[0]*S),canvas.width,h, 0,Math.round(topPx*S),canvas.width,h);
+      /* 쪽 번호 각인 — JPG 전용 규격(§3-5-5 · §18-12). 2쪽 이상일 때만. */
+      if(segs.length>1){
+        var fs=Math.round(9*S);
+        ctx.fillStyle='#9CA3AF';
+        ctx.font='700 '+fs+'px Orbitron, "JetBrains Mono", monospace';
+        ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+        ctx.fillText((idx+1)+' / '+segs.length,
+                     Math.round(MM_PAGE.ML/mmPerPx*S),
+                     Math.round((MM_PAGE.H - MM_PAGE.MB/mmPerPx + fs/S*0.4)*S));
+      }
+      return tmp.toDataURL('image/jpeg',0.95);
+    });
+    mmOpenSheet(shots, base);
+    mmToast(shots.length>1 ? '📄 '+shots.length+'매로 나눴습니다' : '📄 미리보기에서 저장하세요');
+  }).catch(function(err){
+    restoreScale();
+    mmToast('❌ JPG 저장 실패: '+err.message);
+  });
+};
+</script>
+<script>
+/* v5.0-HDR — 요약 스트립 갱신 + 긴 표 판정 + 토스트.
+   계산 함수는 건드리지 않고 recalc / renderResult 를 감싸 window._s 를 읽기만 한다(§18-1). */
+function mmToast(msg){
+  var t=document.getElementById('mm-toast');
+  if(!t){ t=document.createElement('div'); t.id='mm-toast'; t.className='toast'; document.body.appendChild(t); }
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._tm); t._tm=setTimeout(function(){ t.classList.remove('show'); },2200);
+}
+(function(){
+  function setSum(){
+    var s=window._s||null;
+    var f=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v;};
+    if(!s||s.labor===undefined){['sb-sup','sb-months','sb-labor','sb-sub','sb-vat','sb-total'].forEach(function(id){f(id,'—');});return;}
+    var w=function(n){return (Math.round(n)||0).toLocaleString('ko-KR')+'원';};
+    var n=[s.ag,s.mg,s.cg,s.nrg].filter(function(g){return g&&g!=='none';}).length;
+    f('sb-sup', n+'인');
+    f('sb-months', (s.maxM!==undefined?s.maxM:'—')+'개월');
+    f('sb-labor', w(s.labor));
+    f('sb-sub', w(s.sub));
+    f('sb-vat', w(s.vatAmt));
+    f('sb-total', w(s.total));
+  }
+  function afterA4(){
+    var p=document.getElementById('a4Page'); if(p&&typeof markLongTables==='function') markLongTables(p);
+    if(typeof scaleA4==='function') setTimeout(scaleA4,0);
+  }
+  var _rc=window.recalc,_rr=window.renderResult;
+  if(typeof _rc==='function'){window.recalc=function(){var r=_rc.apply(this,arguments);setSum();return r;};}
+  if(typeof _rr==='function'){window.renderResult=function(){var r=_rr.apply(this,arguments);afterA4();return r;};}
+  setSum();
+  window.addEventListener('resize', function(){ if(typeof scaleA4==='function') scaleA4(); });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ if(typeof scaleA4==='function') scaleA4(); });
 })();
 </script>
 </body>
