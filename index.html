@@ -369,10 +369,10 @@ body{background:#f4f6f9;color:#1a2744;min-height:100vh;}
 .a4-tbl th,.a4-tbl td{
   border:1px solid #3a4a5e;
   height:34px;
-  padding:0 10px;
+  padding:4px 10px;
   vertical-align:middle;
   font-size:12px;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  overflow-wrap:anywhere;word-break:keep-all;line-height:1.35;   /* 2026-10-31 v5.0.12 — 말줄임 삭제(감리인원이 「…」로 잘림) → 줄바꿈 */
 }
 .a4-tbl thead tr{background:#785a28;color:#fff;}
 .a4-tbl thead th{font-size:12px;font-weight:700;text-align:center;height:36px;}
