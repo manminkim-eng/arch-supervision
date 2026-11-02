@@ -412,6 +412,11 @@ body{background:#f4f6f9;color:#1a2744;min-height:100vh;}
 .a4-tbl th,.a4-tbl td{height:32px;}
 .a4-tbl thead th{height:34px;}
 .a4-tfoot-row td{height:44px;}
+/* v5.0.17 (2026-11-03, §25-6-39) 최하단 띠 잘림 보완 — 실제 인쇄 폭(184mm)에서 감리인원 칸 3줄 · 법적 근거 2줄로 내용이 1004px 가 되어 쪽 높이 986px(261mm)를 18px 넘음 →
+   하단 갈색 띠 · 판 표기가 쪽 밖으로 밀려 PDF 에서 잘림(화면 · JPG 는 아래 여백 안으로 밀려 내려감). 표 행 높이만 2px 줄여(32→30 · 머리 34→32 · 합계 44→42) 내용 950px, 여유 37px. 서명란은 margin-top:auto 로 그대로 바닥. */
+.a4-tbl th,.a4-tbl td{height:30px;}
+.a4-tbl thead th{height:32px;}
+.a4-tfoot-row td{height:42px;}
 
 /* ── 인쇄 전용 (v5.0 §3-3 · §16-9 · §16-13 · §16-15 · §17-3) ── */
 @media print{

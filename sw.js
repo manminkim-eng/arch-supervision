@@ -37,7 +37,7 @@ const mmMatch = (req, opt) => caches.keys()
   .then((ks) => ks.reduce((p, k) => p.then((r) => r || caches.open(k).then((c) => c.match(req, opt))), Promise.resolve(undefined)))
   .then((r) => (r && r.type === 'opaque' && req && req.mode === 'cors') ? undefined : r);
 
-const CACHE  = 'resident-v5.0.16';   /* 2026-09-03 v5.0 디자인 통일 */
+const CACHE  = 'resident-v5.0.17';   /* 2026-11-03 최하단 띠 잘림 보완(§25-6-39) (종전 v5.0.16) */
 const ORPHAN = ['resident-v3.0'];
 const ASSETS = [
   './',
