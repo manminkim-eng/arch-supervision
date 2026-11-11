@@ -1,5 +1,10 @@
 # 건축공사 상주감리 대가 산출기 [MANMIN-Ver5.0]
 
+## v6.1.0 (2026-11-12) — 건물개요 저장 · 불러오기
+
+- 공통 원본 MM-PROJECT v1.2 새로 넣음(🏢 건물개요 단추 — 같은 현장 정보를 다른 MANMIN 도구와 주고받음). 공유 칸: 사업명 · 발주처(건축주) — 감리자 칸은 공유하지 않음(서명란 회사명 보호, MIN 결정). 이미 입력된 칸은 직접 체크해야 덮어씀(정밀검토 B6 · 작업지시서 §25-6-77).
+- 판 6.1 · sw `resident-v6.1.0` · 계산 · 인쇄 · MM-PRINT 구간 · 사용자 매뉴얼 변경 없음.
+
 > 건축법 시행령 제19조제5항 상주감리 — 실비정액가산식(직접인건비 + 제경비 + 기술료 + 직접경비)으로 감리 대가를 산출하는 PWA
 > https://manminkim-eng.github.io/arch-supervision/ · 사용자 매뉴얼 https://manminkim-eng.github.io/arch-supervision/manual/
 
