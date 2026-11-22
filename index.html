@@ -230,16 +230,19 @@ body{background:#f4f6f9;color:#1a2744;min-height:100vh;}
 .worker-slot.arch{border-left:3px solid #785a28;}
 .worker-slot.mech{border-left:3px solid #0891b2;}
 .worker-slot.civil{border-left:3px solid #7c3aed;}
+.worker-slot.elec{border-left:3px solid #d97706;}  /* v6.1.6 전기 분야 */
 .worker-slot.nonresident{border-left:3px solid #94a3b8;background:#f8fafd;}
 .worker-tag{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
 .tag-pill{padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;}
 .tag-blue{background:#f6ecd6;color:#1d4ed8;}
 .tag-cyan{background:#cffafe;color:#0e7490;}
 .tag-purple{background:#ede9fe;color:#6d28d9;}
+.tag-amber{background:#fef3c7;color:#b45309;}
 .tag-gray{background:#f1f5f9;color:#64748b;}
 .mini-calc{margin-top:8px;padding:6px 10px;border-radius:6px;background:#fbf6ea;font-size:11px;color:#1d4ed8;font-weight:600;word-break:break-all;}
 .mini-calc.cyan{background:#ecfeff;color:#0e7490;}
 .mini-calc.purple{background:#f5f3ff;color:#6d28d9;}
+.mini-calc.amber{background:#fffbeb;color:#92400e;}
 .mini-calc.gray{background:#f8fafd;color:#64748b;}
 .mandays-box{padding:9px 10px;background:#fbf6ea;border:1.5px solid #f1cd7c;border-radius:8px;font-size:13px;font-weight:700;color:#5c4420;text-align:center;}
 
@@ -417,6 +420,9 @@ body{background:#f4f6f9;color:#1a2744;min-height:100vh;}
 .a4-tbl th,.a4-tbl td{height:30px;}
 .a4-tbl thead th{height:32px;}
 .a4-tfoot-row td{height:42px;}
+/* v6.1.6 — 전기 분야를 투입하면 산출서 두 표에 행이 1개씩 늘어(+60px) 1매를 넘음 → 그때만 표 행 높이 30→24px(머리 · 합계 줄은 그대로). 전기 미투입이면 전기 행을 숨겨 종전 산출서와 같음 */
+#a4Page.a4-dense .a4-tbl td{height:24px;}
+#a4Page.a4-dense .a4-tfoot-row td{height:42px;}
 
 /* ── 인쇄 전용 (v5.0 §3-3 · §16-9 · §16-13 · §16-15 · §17-3) ── */
 @media print{
@@ -734,7 +740,7 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
     </div>
     <div class="hdr-right-wrap">
       <!-- v5.0-HDR — 마스터 4줄(13/11/11/10) · 원본 A4 산출근거 문구에서 발췌 -->
-      <div class="hdr-right"><strong>건축법 제25조 · 시행령 제19조</strong><br/>건축사법 제19조의3 · 대가기준 고시 제2020-635호<br/>건축공사 감리세부기준 고시 제2024-377호<br/><em>[엔지니어링 노임단가 2022~2026년 선택]</em></div>
+      <div class="hdr-right"><strong>건축법 제25조 · 시행령 제19조</strong><br/>건축사법 제19조의3 · 공공발주 대가기준 고시 제2020-635호<br/>건축공사 감리세부기준 고시 제2024-377호<br/><em>[엔지니어링 노임단가 2022~2026년 선택]</em></div>
       <!-- v5.0 : 헤더 버튼 없음. 설치는 PWA 배너가, 인쇄·JPG 는 산출서 탭 출력바가, 계산식 안내는 FAB 이 담당한다(§3-1 · §18-1). -->
     </div>
   </div>
@@ -772,15 +778,15 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
   <div class="law-strip no-print">
     <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
     <div class="law-strip-text">
-      <strong>건축법 제25조 · 건축법 시행령 제19조 제5항</strong> — 바닥면적 5,000㎡↑, 연속 5층↑ 3,000㎡↑, 아파트, 준다중이용건축물 1,000㎡↑ 해당 시 건축사보 1인↑ 전기간 상주.
-      &nbsp;|&nbsp; <strong>실비정액가산방식</strong> · 1개월 = 22인일
+      <strong>건축법 제25조 · 건축법 시행령 제19조 제5항</strong> — 바닥면적 5,000㎡↑, 연속 5층↑ 3,000㎡↑, 아파트, 준다중이용건축물 1,000㎡↑ 해당 시 건축 분야 건축사보 1인↑ 전기간, 토목ㆍ전기 또는 기계 분야는 분야별 해당 공사기간 상주. <span style="opacity:.85;">(그 밖에 ⑥ 굴착 10m↑ · 옹벽 5m↑ 공사기간, ⑦ 마감재료 설치기간에도 건축사보 배치 · 다중이용 건축물은 건설기술 진흥법 기준(②))</span>
+      &nbsp;|&nbsp; <strong>실비정액가산방식</strong> · 1개월 = 22인일(건설엔지니어링 대가 등에 관한 기준 제10조① 유추)
     </div>
   </div>
 
   <div class="total-banner no-print">
     <div>
       <div class="total-banner-label">총 상주감리비 (VAT 포함)</div>
-      <div class="total-banner-desc" id="banner-desc">상주기간 0개월 · 상주 3인 + 비상주 1인</div>
+      <div class="total-banner-desc" id="banner-desc">상주기간 6개월 · 상주 3인 + 비상주 1인</div>
     </div>
     <div class="total-banner-right">
       <div class="total-banner-amount" id="banner-total">₩ 0</div>
@@ -835,6 +841,7 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
           </div>
           <input class="fire-input" type="text" inputmode="numeric" id="negoAmount" value="0" placeholder="협의 차감액 입력" oninput="fmtInput(this);recalc()" style="border-color:#fdba74;background:#fff;"/>
           <div class="nego-note">* 입력한 금액만큼 최종 공급가액에서 차감됩니다.</div>
+          <div id="negoWarn" style="display:none;font-size:11px;font-weight:700;color:#b91c1c;margin-top:4px;"></div>
         </div>
       </div>
 
@@ -870,14 +877,14 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
         <div class="card-header">
           <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
           <span class="card-title">상주감리원 설정</span>
-          <span class="card-badge-blue">건축·기계·토목</span>
+          <span class="card-badge-blue">건축·기계·토목·전기</span>
         </div>
         <div style="margin-bottom:10px;">
           <div class="field-label">노임 적용연도 (엔지니어링 노임단가 · 건설부문)</div>
           <select class="fire-select" id="wageYear" onchange="recalc()" aria-label="노임 적용연도"></select>
           <div id="wagePending" class="no-print" style="display:none;margin-top:6px;font-size:11px;line-height:1.5;color:#92400e;background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:5px 8px;"></div>
         </div>
-        <div class="period-info">📅 <strong>0.5개월 단위</strong> 입력 &nbsp;|&nbsp; 1개월 = 22인일(man-days) 자동 환산</div>
+        <div class="period-info">📅 <strong>0.5개월 단위</strong> 입력 &nbsp;|&nbsp; 1개월 = 22인일(man-days) 자동 환산 — 건설엔지니어링 대가 등에 관한 기준 제10조①(1개월 22일) 유추 적용</div>
 
         <div class="worker-slot arch">
           <div class="worker-tag" style="color:#785a28;">🏛 건축 분야 <span class="tag-pill tag-blue">상주감리원 01</span></div>
@@ -892,7 +899,7 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
         <div class="worker-slot mech">
           <div class="worker-tag" style="color:#0891b2;">⚙️ 기계 분야 <span class="tag-pill tag-cyan">상주감리원 02</span></div>
           <div class="grid-3">
-            <div><div class="field-label">기술등급</div><select class="fire-select" id="mech_grade" onchange="recalc()"><option value="professional">기술사/건축사</option><option value="special">특급기술자</option><option value="high" selected>고급기술자</option><option value="middle">중급기술자</option><option value="low">초급기술자</option></select></div>
+            <div><div class="field-label">기술등급</div><select class="fire-select" id="mech_grade" onchange="recalc()"><option value="none">미투입</option><option value="professional">기술사/건축사</option><option value="special">특급기술자</option><option value="high" selected>고급기술자</option><option value="middle">중급기술자</option><option value="low">초급기술자</option></select></div>
             <div><div class="field-label">감리기간(개월)</div><div class="flex-row"><input class="fire-input" type="text" inputmode="decimal" id="mech_months" value="6" oninput="recalc()"/><span class="unit-label">월</span></div></div>
             <div><div class="field-label">인일수(자동)</div><div class="mandays-box" style="background:#ecfeff;border-color:#67e8f9;color:#0e7490;" id="mech_mandays_display">132 일</div></div>
           </div>
@@ -902,11 +909,21 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
         <div class="worker-slot civil">
           <div class="worker-tag" style="color:#7c3aed;">🏗 토목 분야 <span class="tag-pill tag-purple">상주감리원 03</span></div>
           <div class="grid-3">
-            <div><div class="field-label">기술등급</div><select class="fire-select" id="civil_grade" onchange="recalc()"><option value="professional">기술사/건축사</option><option value="special">특급기술자</option><option value="high" selected>고급기술자</option><option value="middle">중급기술자</option><option value="low">초급기술자</option></select></div>
+            <div><div class="field-label">기술등급</div><select class="fire-select" id="civil_grade" onchange="recalc()"><option value="none">미투입</option><option value="professional">기술사/건축사</option><option value="special">특급기술자</option><option value="high" selected>고급기술자</option><option value="middle">중급기술자</option><option value="low">초급기술자</option></select></div>
             <div><div class="field-label">감리기간(개월)</div><div class="flex-row"><input class="fire-input" type="text" inputmode="decimal" id="civil_months" value="6" oninput="recalc()"/><span class="unit-label">월</span></div></div>
             <div><div class="field-label">인일수(자동)</div><div class="mandays-box" style="background:#f5f3ff;border-color:#c4b5fd;color:#6d28d9;" id="civil_mandays_display">132 일</div></div>
           </div>
           <div class="mini-calc purple" id="civil_mini">310,884 × 132일 = <strong>41,036,688</strong> 원</div>
+        </div>
+
+        <div class="worker-slot elec">
+          <div class="worker-tag" style="color:#b45309;">⚡ 전기 분야 <span class="tag-pill tag-amber">상주감리원 04</span> <span style="font-size:10.5px;font-weight:600;color:#92400e;">해당 공사기간만 · 없으면 미투입</span></div>
+          <div class="grid-3">
+            <div><div class="field-label">기술등급</div><select class="fire-select" id="elec_grade" onchange="recalc()"><option value="none" selected>미투입</option><option value="professional">기술사/건축사</option><option value="special">특급기술자</option><option value="high">고급기술자</option><option value="middle">중급기술자</option><option value="low">초급기술자</option></select></div>
+            <div><div class="field-label">감리기간(개월)</div><div class="flex-row"><input class="fire-input" type="text" inputmode="decimal" id="elec_months" value="6" oninput="recalc()"/><span class="unit-label">월</span></div></div>
+            <div><div class="field-label">인일수(자동)</div><div class="mandays-box" style="background:#fffbeb;border-color:#fcd34d;color:#b45309;" id="elec_mandays_display">-</div></div>
+          </div>
+          <div class="mini-calc amber" id="elec_mini">미투입</div>
         </div>
       </div>
 
@@ -937,6 +954,7 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
           <div class="labor-row"><span class="labor-row-label">🏛 건축 상주감리원</span><span class="labor-row-val" id="sum_arch">0 원</span></div>
           <div class="labor-row"><span class="labor-row-label">⚙️ 기계 상주감리원</span><span class="labor-row-val" id="sum_mech">0 원</span></div>
           <div class="labor-row"><span class="labor-row-label">🏗 토목 상주감리원</span><span class="labor-row-val" id="sum_civil">0 원</span></div>
+          <div class="labor-row"><span class="labor-row-label">⚡ 전기 상주감리원</span><span class="labor-row-val" id="sum_elec">미투입</span></div>
           <div class="labor-row"><span class="labor-row-label">📋 비상주 감리원</span><span class="labor-row-val" id="sum_nr">0 원</span></div>
           <div class="labor-total-row"><span class="lt-label">직접인건비 합계</span><span class="lt-val" id="sum_total">0 원</span></div>
         </div>
@@ -973,6 +991,7 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
           <tr><td class="a4-sub-item">· 건축 상주감리원</td><td class="a4-desc" id="r-arch-desc">-</td><td class="a4-amt" style="font-weight:500;font-size:10.5px;" id="r-arch-amt">0</td></tr>
           <tr><td class="a4-sub-item">· 기계 상주감리원</td><td class="a4-desc" id="r-mech-desc">-</td><td class="a4-amt" style="font-weight:500;font-size:10.5px;" id="r-mech-amt">0</td></tr>
           <tr><td class="a4-sub-item">· 토목 상주감리원</td><td class="a4-desc" id="r-civil-desc">-</td><td class="a4-amt" style="font-weight:500;font-size:10.5px;" id="r-civil-amt">0</td></tr>
+          <tr><td class="a4-sub-item">· 전기 상주감리원</td><td class="a4-desc" id="r-elec-desc">-</td><td class="a4-amt" style="font-weight:500;font-size:10.5px;" id="r-elec-amt">-</td></tr>
           <tr><td class="a4-sub-item">· 비상주 감리원</td><td class="a4-desc" id="r-nr-desc">-</td><td class="a4-amt" style="font-weight:500;font-size:10.5px;" id="r-nr-amt">0</td></tr>
           <tr><td class="a4-item">② 제경비</td><td class="a4-desc" id="r-overhead-desc">직접인건비의 110%</td><td class="a4-amt" id="r-overhead">0</td></tr>
           <tr><td class="a4-item">③ 기술료</td><td class="a4-desc" id="r-techfee-desc">(인건비+제경비)의 20%</td><td class="a4-amt" id="r-techFee">0</td></tr>
@@ -990,6 +1009,7 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
           <tr><td style="padding-left:13px;font-weight:700;color:#785a28;">건축 상주</td><td class="a4-td-c" id="r-arch-grade-name">-</td><td class="a4-td-c" id="r-arch-period">-</td><td class="a4-td-c" id="r-arch-mdays">-</td><td style="text-align:right;padding-right:13px;" id="r-arch-rate">-</td><td style="text-align:right;padding-right:10px;font-weight:700;" id="r-arch-sub">-</td></tr>
           <tr><td style="padding-left:13px;font-weight:700;color:#0891b2;">기계 상주</td><td class="a4-td-c" id="r-mech-grade-name">-</td><td class="a4-td-c" id="r-mech-period">-</td><td class="a4-td-c" id="r-mech-mdays">-</td><td style="text-align:right;padding-right:13px;" id="r-mech-rate">-</td><td style="text-align:right;padding-right:10px;font-weight:700;" id="r-mech-sub">-</td></tr>
           <tr><td style="padding-left:13px;font-weight:700;color:#7c3aed;">토목 상주</td><td class="a4-td-c" id="r-civil-grade-name">-</td><td class="a4-td-c" id="r-civil-period">-</td><td class="a4-td-c" id="r-civil-mdays">-</td><td style="text-align:right;padding-right:13px;" id="r-civil-rate">-</td><td style="text-align:right;padding-right:10px;font-weight:700;" id="r-civil-sub">-</td></tr>
+          <tr><td style="padding-left:13px;font-weight:700;color:#b45309;">전기 상주</td><td class="a4-td-c" id="r-elec-grade-name">-</td><td class="a4-td-c" id="r-elec-period">-</td><td class="a4-td-c" id="r-elec-mdays">-</td><td style="text-align:right;padding-right:13px;" id="r-elec-rate">-</td><td style="text-align:right;padding-right:10px;font-weight:700;" id="r-elec-sub">-</td></tr>
           <tr><td style="padding-left:13px;font-weight:700;color:#64748b;">비상주</td><td class="a4-td-c" id="r-nr-grade-name">-</td><td class="a4-td-c" id="r-nr-period">-</td><td class="a4-td-c" id="r-nr-mdays">-</td><td style="text-align:right;padding-right:13px;" id="r-nr-rate">-</td><td style="text-align:right;padding-right:10px;font-weight:700;" id="r-nr-sub">-</td></tr>
         </tbody>
       </table>
@@ -998,7 +1018,7 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
         <div class="a4-sign-date" id="r-date2">2026. 03. 15</div>
         <div class="a4-sign-legal">
           <div class="lbl">법적 근거</div>
-          <p>건축법 제25조(건축물의 공사감리) · 건축법 시행령 제19조 제5항 · 건축사법 제19조의3 · 건축사의 업무범위와 대가기준(국토교통부 고시 제2020-635호) · 건축공사 감리세부기준(고시 제2024-377호) · <span id="r-wage-law">2026년 엔지니어링 노임단가(한국엔지니어링협회 2025.12.2. 공표 · 2026.1.1. 적용, 건설부문)</span></p>
+          <p>건축법 제25조(건축물의 공사감리) · 건축법 시행령 제19조 제5항 · 건축사법 제19조의3 · 공공발주사업에 대한 건축사의 업무범위와 대가기준(국토교통부 고시 제2020-635호) · 건축공사 감리세부기준(고시 제2024-377호) · <span id="r-wage-law">2026년 엔지니어링 노임단가(한국엔지니어링협회 2025.12.2. 공표 · 2026.1.1. 적용, 건설부문)</span></p>
         </div>
         <div class="a4-sign-supervisor"><span class="hint">공사감리자</span><span class="name" id="r-sign-name">○○건축사사무소</span><span class="hint">(인)</span></div>
       </div>
@@ -1027,7 +1047,7 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
         <div class="ref-block-header"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>법정 요율 범위</div>
         <div class="ref-block-body">
           <div class="ref-item"><span class="ref-item-label">제경비 (대가기준 제17조제2호)</span><span class="ref-item-value">직접인건비 × 110~120%</span></div>
-          <div class="ref-item"><span class="ref-item-label">기술료 (대가기준 제17조제3호)</span><span class="ref-item-value">(인건비+제경비) × 20~40%</span></div>
+          <div class="ref-item"><span class="ref-item-label">창작 및 기술료 (대가기준 제17조제3호)</span><span class="ref-item-value">(인건비+제경비) × 20~40%</span></div>
           <div class="ref-item"><span class="ref-item-label">부가가치세</span><span class="ref-item-value">공급가액 × 10%</span></div>
         </div>
       </div>
@@ -1097,7 +1117,7 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
             <div style="font-size:12px;font-weight:900;color:#785a28;margin-bottom:5px;">📝 감리원 정보 입력</div>
             <div style="font-size:10.5px;color:#374151;line-height:1.85;">
               ① 상단 <strong>「📝 입력·산출」 탭</strong>을 선택합니다.<br>
-              ② <strong>건축·기계·토목 상주감리원</strong> 각각의 <strong>기술등급</strong>(기술사/특급/고급/중급/초급)과 <strong>감리기간(개월)</strong>을 입력합니다.<br>
+              ② <strong>건축·기계·토목·전기 상주감리원</strong> 각각의(투입하지 않는 분야는 「미투입」) <strong>기술등급</strong>(기술사/특급/고급/중급/초급)과 <strong>감리기간(개월)</strong>을 입력합니다.<br>
               ③ 기간은 <strong>0.5개월 단위</strong>로 입력 가능합니다 — 예: 6.5개월 → 143인일 자동 환산.<br>
               ④ <strong>비상주 감리원</strong>은 투입 여부를 선택하고, 투입 시 등급과 개월수를 입력합니다.
             </div>
@@ -1182,9 +1202,10 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
         <div class="fml-hi" style="margin-top:4px;">
           <div class="fml-card-ttl" style="color:#785a28;">📌 주요 법적 근거</div>
           <div class="fml-note" style="font-size:10.5px;line-height:2.0;">
-            <strong>건축법 제25조</strong> — 건축물의 공사감리 · 26.02.27 최신 시행<br>
-            <strong>건축법 시행령 제19조 제5항</strong> — 상주감리 연속 배치 기준 · 현행 26.10.06 시행<br>
-            <strong>국토부 고시 제2020-635호</strong> — 건축사 업무범위와 대가기준<br>
+            <strong>건축법 제25조</strong> — 건축물의 공사감리 · 현행 2026.11.12 시행<br>
+            <strong>건축법 시행령 제19조 제5항</strong> — 상주감리 배치 기준(건축 전체 기간 · 토목ㆍ전기 또는 기계 분야별 해당 기간) · 현행 2026.11.12 시행<br>
+            <strong>국토부 고시 제2020-635호</strong> — 공공발주사업에 대한 건축사의 업무범위와 대가기준(제17조 제경비 · 창작 및 기술료)<br>
+            <strong>1개월 = 22인일</strong> — 건축사 대가기준에 직접 규정 없음 · 건설엔지니어링 대가 등에 관한 기준 제10조①(1개월 22일) 유추<br>
             <strong>엔지니어링 노임단가</strong> — 한국엔지니어링협회 공표 · 건설부문 · 「노임 적용연도」에서 2022~2026년 선택(기본 최신)
           </div>
         </div>
@@ -1197,7 +1218,7 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
         <div class="fml-hi">
           <div class="fml-card-ttl" style="color:#785a28;">기본 공식 (실비정액가산방식)</div>
           <code class="fml-eq hi">직접인건비 = Σ (기술등급별 노임단가 × 인일수)</code>
-          <div class="fml-note">각 기술자의 1일 노임단가에 실제 투입 인일수를 곱하여 합산합니다.<br/>※ 상주감리원 3인(건축·기계·토목) + 비상주감리원 1인 전원 합산</div>
+          <div class="fml-note">각 기술자의 1일 노임단가에 실제 투입 인일수를 곱하여 합산합니다.<br/>※ 상주감리원(건축 · 기계 · 토목 · 전기 중 투입 분야) + 비상주감리원 1인 합산 — 미투입은 0</div>
         </div>
         <div class="fml-sec-ttl" style="color:#0891b2;">개월 → 인일수 변환 (0.5개월 단위)</div>
         <div class="fml-hi" style="border-color:#67e8f9;background:#ecfeff;">
@@ -1213,9 +1234,10 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
           <div class="fml-card"><div class="fml-card-ttl" style="color:#785a28;">🏛 건축 상주감리원 (L₁)</div><code class="fml-eq">L₁ = 단가₁ × (개월₁ × 22)</code><div class="fml-note">분야: 건축 · 기술등급 선택</div></div>
           <div class="fml-card"><div class="fml-card-ttl" style="color:#0891b2;">⚙️ 기계 상주감리원 (L₂)</div><code class="fml-eq" style="background:#ecfeff;color:#0e7490;">L₂ = 단가₂ × (개월₂ × 22)</code><div class="fml-note">분야: 기계 · 기술등급 선택</div></div>
           <div class="fml-card"><div class="fml-card-ttl" style="color:#7c3aed;">🏗 토목 상주감리원 (L₃)</div><code class="fml-eq" style="background:#f5f3ff;color:#6d28d9;">L₃ = 단가₃ × (개월₃ × 22)</code><div class="fml-note">분야: 토목 · 기술등급 선택</div></div>
-          <div class="fml-card"><div class="fml-card-ttl" style="color:#64748b;">📋 비상주 감리원 (L₄)</div><code class="fml-eq" style="background:#f1f5f9;color:#334155;">L₄ = 단가₄ × 투입일수</code><div class="fml-note">미투입 선택 시 L₄ = 0</div></div>
+          <div class="fml-card"><div class="fml-card-ttl" style="color:#b45309;">⚡ 전기 상주감리원 (L₄)</div><code class="fml-eq" style="background:#fffbeb;color:#b45309;">L₄ = 단가₄ × (개월₄ × 22)</code><div class="fml-note">분야: 전기 · 해당 공사기간만(시행령 제19조⑤) · 미투입 선택 시 0</div></div>
+          <div class="fml-card"><div class="fml-card-ttl" style="color:#64748b;">📋 비상주 감리원 (L₅)</div><code class="fml-eq" style="background:#f1f5f9;color:#334155;">L₅ = 단가₅ × 투입일수</code><div class="fml-note">미투입 선택 시 L₅ = 0</div></div>
         </div>
-        <div class="fml-card"><div class="fml-card-ttl">합산 직접인건비</div><code class="fml-eq hi">직접인건비 = L₁ + L₂ + L₃ + L₄</code><div class="fml-note">이 합산액이 제경비·기술료의 계산 기준이 됩니다.</div></div>
+        <div class="fml-card"><div class="fml-card-ttl">합산 직접인건비</div><code class="fml-eq hi">직접인건비 = L₁ + L₂ + L₃ + L₄ + L₅</code><div class="fml-note">이 합산액이 제경비·기술료의 계산 기준이 됩니다.</div></div>
         <div class="fml-sec-ttl" style="color:#e63312;">⚠ 상주감리 M/M 유의사항</div>
         <div class="fml-card" style="border-left:3px solid #e63312;font-size:11px;color:#4a5568;line-height:2.0;">
           <b style="color:#e63312;">건축사법 제19조의3</b> — 공공 발주자는 대가기준 적용(제1항) · 민간은 준용할 수 있음(제2항, 2026.3.17. 개정)<br/>
@@ -1236,7 +1258,7 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
           <div class="fml-card"><div class="fml-card-ttl">최솟값 (110%)</div><code class="fml-eq">제경비 = 직접인건비 × 1.10</code></div>
           <div class="fml-card"><div class="fml-card-ttl">최댓값 (120%)</div><code class="fml-eq">제경비 = 직접인건비 × 1.20</code></div>
         </div>
-        <div class="fml-sec-ttl" style="color:#e63312;margin-top:18px;">③ 기술료 (대가기준 제17조제3호)</div>
+        <div class="fml-sec-ttl" style="color:#e63312;margin-top:18px;">③ 창작 및 기술료 (대가기준 제17조제3호)</div>
         <div class="fml-hi org">
           <div class="fml-card-ttl" style="color:#c2410c;">기술료 공식</div>
           <code class="fml-eq hi">기술료 = (직접인건비 + 제경비) × 기술료율 (20% ~ 40%)</code>
@@ -1276,7 +1298,7 @@ footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;backgrou
         <div class="fml-sec-ttl" style="color:#64748b;margin-top:18px;">전체 산출 흐름 요약</div>
         <div class="fml-card" style="padding:0;overflow:hidden;">
           <table class="fml-flow">
-            <tr><td style="color:#785a28;">①</td><td><strong>직접인건비</strong> = L건축 + L기계 + L토목 + L비상주 &nbsp;(노임단가 × 인일수 합산)</td></tr>
+            <tr><td style="color:#785a28;">①</td><td><strong>직접인건비</strong> = L건축 + L기계 + L토목 + L전기 + L비상주 &nbsp;(노임단가 × 인일수 합산)</td></tr>
             <tr><td style="color:#785a28;">②</td><td><strong>제경비</strong> = ① × 110~120%</td></tr>
             <tr><td style="color:#c2410c;">③</td><td><strong>기술료</strong> = (①+②) × 20~40%</td></tr>
             <tr><td style="color:#64748b;">④</td><td><strong>직접경비</strong> = 실비</td></tr>
@@ -1374,35 +1396,47 @@ function mmPct(a,p){return Math.floor(Math.round(a)*Math.round(p)/100);}
 
 function recalc(){
   const wy=wageApply();
-  const ag=document.getElementById('arch_grade').value,am=parseFloat(document.getElementById('arch_months').value)||0,amd=toMD(am),al=RATES[ag]*amd;
-  const mg=document.getElementById('mech_grade').value,mm_=parseFloat(document.getElementById('mech_months').value)||0,mmd=toMD(mm_),ml=RATES[mg]*mmd;
-  const cg=document.getElementById('civil_grade').value,cm=parseFloat(document.getElementById('civil_months').value)||0,cmd=toMD(cm),cl=RATES[cg]*cmd;
-  const nrg=document.getElementById('nr_grade').value,nrm=parseFloat(document.getElementById('nr_months').value)||0,nrmd=nrg==='none'?0:toMD(nrm),nrl=RATES[nrg]*nrmd;
+  /* v6.1.6 — 개월 음수는 0(교차검증 P2) · 「미투입」 분야는 0 · 전기 분야 추가(시행령 제19조⑤ 토목ㆍ전기 또는 기계, 교차검증 P1) */
+  const mo=id=>Math.max(0,parseFloat(document.getElementById(id).value)||0);
+  const md=(g,m)=>g==='none'?0:toMD(m);
+  const ag=document.getElementById('arch_grade').value,am=mo('arch_months'),amd=md(ag,am),al=RATES[ag]*amd;
+  const mg=document.getElementById('mech_grade').value,mm_=mo('mech_months'),mmd=md(mg,mm_),ml=RATES[mg]*mmd;
+  const cg=document.getElementById('civil_grade').value,cm=mo('civil_months'),cmd=md(cg,cm),cl=RATES[cg]*cmd;
+  const eg=document.getElementById('elec_grade').value,em=mo('elec_months'),emd=md(eg,em),el=RATES[eg]*emd;
+  const nrg=document.getElementById('nr_grade').value,nrm=mo('nr_months'),nrmd=md(nrg,nrm),nrl=RATES[nrg]*nrmd;
   const oR=+document.getElementById('overheadRate').value,tR=+document.getElementById('techFeeRate').value;
-  const de=rawNum('directExpenses'),ins=rawNum('insuranceFee'),neg=rawNum('negoAmount');
+  const de=rawNum('directExpenses'),ins=rawNum('insuranceFee'),negIn=rawNum('negoAmount');
   const vat=document.getElementById('includeVat').checked;
-  const labor=al+ml+cl+nrl,over=mmPct(labor,oR),tech=mmPct(labor+over,tR);   /* v5.0.6 — 정수 연산(부동소수 오차로 1원·1,000원 적게 나오던 문제) */
-  const sub=labor+over+tech+de+ins-neg,vatAmt=vat?mmPct(sub,10):0,total=Math.floor((sub+vatAmt)/1000)*1000;
-  const maxM=Math.max(am,mm_,cm);
-  document.getElementById('banner-desc').textContent=`상주기간 ${maxM}개월 · 상주 3인 + 비상주${nrg==='none'?' 미투입':' 1인'} · ${vat?'VAT 포함':'VAT 제외'}`;
+  const labor=al+ml+cl+el+nrl,over=mmPct(labor,oR),tech=mmPct(labor+over,tR);   /* v5.0.6 — 정수 연산(부동소수 오차로 1원·1,000원 적게 나오던 문제) */
+  const pre=labor+over+tech+de+ins;
+  const neg=Math.min(negIn,Math.max(0,pre));   /* v6.1.6 — 네고는 산출 금액까지만 차감(교차검증 P2) */
+  const nw=document.getElementById('negoWarn');
+  if(nw){ nw.style.display=negIn>pre?'block':'none'; nw.textContent=negIn>pre?`⚠ 네고가 산출 금액(${fmt(pre)}원)보다 큽니다 — 산출 금액까지만 차감합니다.`:''; }
+  const sub=pre-neg,vatAmt=vat?mmPct(sub,10):0,total=Math.floor((sub+vatAmt)/1000)*1000;
+  const act=[[ag,amd],[mg,mmd],[cg,cmd],[eg,emd]].filter(([g,d])=>g!=='none'&&d>0).length;
+  const maxM=Math.max(amd?am:0,mmd?mm_:0,cmd?cm:0,emd?em:0);
+  document.getElementById('banner-desc').textContent=`상주기간 ${maxM}개월 · 상주 ${act}인 + 비상주${nrg==='none'?' 미투입':' 1인'} · ${vat?'VAT 포함':'VAT 제외'}`;
   document.getElementById('banner-total').textContent='₩ '+fmt(total);
   document.getElementById('banner-sub').textContent='공급가액 '+fmt(sub)+' 원';
   document.getElementById('arch_mandays_display').textContent=amd+' 일';
-  document.getElementById('mech_mandays_display').textContent=mmd+' 일';
-  document.getElementById('civil_mandays_display').textContent=cmd+' 일';
+  document.getElementById('mech_mandays_display').textContent=mg==='none'?'-':mmd+' 일';
+  document.getElementById('civil_mandays_display').textContent=cg==='none'?'-':cmd+' 일';
   document.getElementById('nr_mandays_display').textContent=nrg==='none'?'-':nrmd+' 일';
   document.getElementById('arch_mini').innerHTML=`${fmt(RATES[ag])} × ${amd}일 (${am}개월) = <strong>${fmt(al)}</strong> 원`;
-  document.getElementById('mech_mini').innerHTML=`${fmt(RATES[mg])} × ${mmd}일 (${mm_}개월) = <strong>${fmt(ml)}</strong> 원`;
-  document.getElementById('civil_mini').innerHTML=`${fmt(RATES[cg])} × ${cmd}일 (${cm}개월) = <strong>${fmt(cl)}</strong> 원`;
+  document.getElementById('mech_mini').innerHTML=mg==='none'?'미투입':`${fmt(RATES[mg])} × ${mmd}일 (${mm_}개월) = <strong>${fmt(ml)}</strong> 원`;
+  document.getElementById('civil_mini').innerHTML=cg==='none'?'미투입':`${fmt(RATES[cg])} × ${cmd}일 (${cm}개월) = <strong>${fmt(cl)}</strong> 원`;
   document.getElementById('nr_mini').innerHTML=nrg==='none'?'미투입':`${fmt(RATES[nrg])} × ${nrmd}일 (${nrm}개월) = <strong>${fmt(nrl)}</strong> 원`;
   document.getElementById('sum_arch').textContent=fmt(al)+' 원';
-  document.getElementById('sum_mech').textContent=fmt(ml)+' 원';
-  document.getElementById('sum_civil').textContent=fmt(cl)+' 원';
+  document.getElementById('sum_mech').textContent=mg==='none'?'미투입':fmt(ml)+' 원';
+  document.getElementById('sum_civil').textContent=cg==='none'?'미투입':fmt(cl)+' 원';
+  document.getElementById('elec_mandays_display').textContent=eg==='none'?'-':emd+' 일';
+  document.getElementById('elec_mini').innerHTML=eg==='none'?'미투입':`${fmt(RATES[eg])} × ${emd}일 (${em}개월) = <strong>${fmt(el)}</strong> 원`;
+  document.getElementById('sum_elec').textContent=eg==='none'?'미투입':fmt(el)+' 원';
   document.getElementById('sum_nr').textContent=nrg==='none'?'미투입':fmt(nrl)+' 원';
   document.getElementById('sum_total').textContent=fmt(labor)+' 원';
   document.getElementById('overheadCalc').textContent=`직접인건비 ${fmt(labor)}원 × ${oR}% → ${fmt(over)} 원`;
   document.getElementById('techFeeCalc').textContent=`(인건비+제경비) ${fmt(labor+over)}원 × ${tR}% → ${fmt(tech)} 원`;
-  window._s={ag,am,amd,al,mg,mm_,mmd,ml,cg,cm,cmd,cl,nrg,nrm,nrmd,nrl,oR,tR,de,ins,neg,vat,labor,over,tech,sub,vatAmt,total,maxM,wy};
+  window._s={ag,am,amd,al,mg,mm_,mmd,ml,cg,cm,cmd,cl,eg,em,emd,el,nrg,nrm,nrmd,nrl,oR,tR,de,ins,negIn,neg,pre,vat,labor,over,tech,sub,vatAmt,total,maxM,act,wy};
 }
 
 function renderResult(){
@@ -1412,18 +1446,21 @@ function renderResult(){
   document.getElementById('r-supervisorName').textContent=document.getElementById('supervisorName').value;
   document.getElementById('r-sign-name').textContent=document.getElementById('supervisorName').value;
   document.getElementById('r-date2').textContent=fmtDate(document.getElementById('reportDate').value);
-  const nrL=s.nrg!=='none'?` + 비상주(${GRADE_NAMES[s.nrg]})`:'';
-  document.getElementById('r-supervisors').textContent=`건축(${GRADE_NAMES[s.ag]}) · 기계(${GRADE_NAMES[s.mg]}) · 토목(${GRADE_NAMES[s.cg]})${nrL}`;
+  const nrL=s.nrg!=='none'&&s.nrmd>0?` + 비상주(${GRADE_NAMES[s.nrg]})`:'';
+  document.getElementById('r-supervisors').textContent=([['건축',s.ag,s.amd],['기계',s.mg,s.mmd],['토목',s.cg,s.cmd],['전기',s.eg,s.emd]].filter(([,g,d])=>g!=='none'&&d>0).map(([n,g])=>`${n}(${GRADE_NAMES[g]})`).join(' · ')||'상주 없음')+nrL;
   document.getElementById('r-period').textContent=s.maxM+'개월';
   document.getElementById('r-directLabor').textContent=fmt(s.labor);
   document.getElementById('r-wage-law').textContent=MM_WAGE.engLaw(s.wy);
   document.getElementById('r-wage-short').textContent=MM_WAGE.engShort(s.wy);
   document.getElementById('r-arch-desc').textContent=`${fmt(RATES[s.ag])}×${s.amd}일(${s.am}개월)`;
   document.getElementById('r-arch-amt').textContent=fmt(s.al);
-  document.getElementById('r-mech-desc').textContent=`${fmt(RATES[s.mg])}×${s.mmd}일(${s.mm_}개월)`;
-  document.getElementById('r-mech-amt').textContent=fmt(s.ml);
-  document.getElementById('r-civil-desc').textContent=`${fmt(RATES[s.cg])}×${s.cmd}일(${s.cm}개월)`;
-  document.getElementById('r-civil-amt').textContent=fmt(s.cl);
+  document.getElementById('r-mech-desc').textContent=s.mg==='none'?'미투입':`${fmt(RATES[s.mg])}×${s.mmd}일(${s.mm_}개월)`;
+  document.getElementById('r-mech-amt').textContent=s.mg==='none'?'-':fmt(s.ml);
+  document.getElementById('r-civil-desc').textContent=s.cg==='none'?'미투입':`${fmt(RATES[s.cg])}×${s.cmd}일(${s.cm}개월)`;
+  document.getElementById('r-civil-amt').textContent=s.cg==='none'?'-':fmt(s.cl);
+  { const eOn=s.eg!=='none'; ['r-elec-desc','r-elec-grade-name'].forEach(id=>{const tr=document.getElementById(id).closest('tr'); if(tr) tr.style.display=eOn?'':'none';}); document.getElementById('a4Page').classList.toggle('a4-dense',eOn); }
+  document.getElementById('r-elec-desc').textContent=s.eg==='none'?'미투입':`${fmt(RATES[s.eg])}×${s.emd}일(${s.em}개월)`;
+  document.getElementById('r-elec-amt').textContent=s.eg==='none'?'-':fmt(s.el);
   document.getElementById('r-nr-desc').textContent=s.nrg==='none'?'미투입':`${fmt(RATES[s.nrg])}×${s.nrmd}일(${s.nrm}개월)`;
   document.getElementById('r-nr-amt').textContent=s.nrg==='none'?'-':fmt(s.nrl);
   document.getElementById('r-overhead').textContent=fmt(s.over);
@@ -1443,15 +1480,20 @@ function renderResult(){
   document.getElementById('r-arch-rate').textContent=fmt(RATES[s.ag]);
   document.getElementById('r-arch-sub').textContent=fmt(s.al);
   document.getElementById('r-mech-grade-name').textContent=GRADE_NAMES[s.mg];
-  document.getElementById('r-mech-period').textContent=s.mm_+'개월';
-  document.getElementById('r-mech-mdays').textContent=s.mmd+'일';
-  document.getElementById('r-mech-rate').textContent=fmt(RATES[s.mg]);
-  document.getElementById('r-mech-sub').textContent=fmt(s.ml);
+  document.getElementById('r-mech-period').textContent=s.mg==='none'?'-':s.mm_+'개월';
+  document.getElementById('r-mech-mdays').textContent=s.mg==='none'?'-':s.mmd+'일';
+  document.getElementById('r-mech-rate').textContent=s.mg==='none'?'-':fmt(RATES[s.mg]);
+  document.getElementById('r-mech-sub').textContent=s.mg==='none'?'-':fmt(s.ml);
   document.getElementById('r-civil-grade-name').textContent=GRADE_NAMES[s.cg];
-  document.getElementById('r-civil-period').textContent=s.cm+'개월';
-  document.getElementById('r-civil-mdays').textContent=s.cmd+'일';
-  document.getElementById('r-civil-rate').textContent=fmt(RATES[s.cg]);
-  document.getElementById('r-civil-sub').textContent=fmt(s.cl);
+  document.getElementById('r-civil-period').textContent=s.cg==='none'?'-':s.cm+'개월';
+  document.getElementById('r-civil-mdays').textContent=s.cg==='none'?'-':s.cmd+'일';
+  document.getElementById('r-civil-rate').textContent=s.cg==='none'?'-':fmt(RATES[s.cg]);
+  document.getElementById('r-civil-sub').textContent=s.cg==='none'?'-':fmt(s.cl);
+  document.getElementById('r-elec-grade-name').textContent=GRADE_NAMES[s.eg]||'-';
+  document.getElementById('r-elec-period').textContent=s.eg==='none'?'-':s.em+'개월';
+  document.getElementById('r-elec-mdays').textContent=s.eg==='none'?'-':s.emd+'일';
+  document.getElementById('r-elec-rate').textContent=s.eg==='none'?'-':fmt(RATES[s.eg]);
+  document.getElementById('r-elec-sub').textContent=s.eg==='none'?'-':fmt(s.el);
   document.getElementById('r-nr-grade-name').textContent=GRADE_NAMES[s.nrg]||'-';
   document.getElementById('r-nr-period').textContent=s.nrg==='none'?'-':s.nrm+'개월';
   document.getElementById('r-nr-mdays').textContent=s.nrg==='none'?'-':s.nrmd+'일';
@@ -1883,7 +1925,7 @@ function mmToast(msg){
     var f=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v;};
     if(!s||s.labor===undefined){['sb-sup','sb-months','sb-labor','sb-sub','sb-vat','sb-total'].forEach(function(id){f(id,'—');});return;}
     var w=function(n){return (Math.round(n)||0).toLocaleString('ko-KR')+'원';};
-    var n=[s.ag,s.mg,s.cg,s.nrg].filter(function(g){return g&&g!=='none';}).length;
+    var n=[[s.ag,s.amd],[s.mg,s.mmd],[s.cg,s.cmd],[s.eg,s.emd],[s.nrg,s.nrmd]].filter(function(x){return x[0]&&x[0]!=='none'&&x[1]>0;}).length;   /* v6.1.6 — 전기 포함 · 투입 일수 0 은 빼고 셈 */
     f('sb-sup', n+'인');
     f('sb-months', (s.maxM!==undefined?s.maxM:'—')+'개월');
     f('sb-labor', w(s.labor));
@@ -2060,7 +2102,7 @@ input[data-mm-warn]{outline:2px solid #d32f2f!important;outline-offset:1px;backg
 .mm-warn-note{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid;}}
 </style>
 <script id="mm-warn-cfg">
-window.MM_WARN_CFG={report:'#a4Page',rules:[{sel:'#arch_months',text:true,neg:true},{sel:'#mech_months',text:true,neg:true},{sel:'#civil_months',text:true,neg:true},{sel:'#nr_months',text:true,neg:true}]};
+window.MM_WARN_CFG={report:'#a4Page',rules:[{sel:'#arch_months',text:true,neg:'음수 → 0개월 적용'},{sel:'#mech_months',text:true,neg:'음수 → 0개월 적용'},{sel:'#civil_months',text:true,neg:'음수 → 0개월 적용'},{sel:'#elec_months',text:true,neg:'음수 → 0개월 적용'},{sel:'#nr_months',text:true,neg:'음수 → 0개월 적용'}]};
 </script>
 <script id="mm-warn-js">
 (function(){
